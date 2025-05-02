@@ -1,0 +1,227 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 221.2 83.2% 53.3%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 221.2 83.2% 53.3%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 217.2 91.2% 59.8%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 224.3 76.3% 48%;
+  }
+
+  .neon {
+    --background: 240 100% 8%;
+    --foreground: 0 0% 98%;
+
+    --card: 240 100% 8%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 240 100% 8%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 320 100% 60%;
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 180 100% 50%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 240 50% 20%;
+    --muted-foreground: 0 0% 70%;
+
+    --accent: 120 100% 50%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 100% 50%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 240 50% 20%;
+    --input: 240 50% 20%;
+    --ring: 320 100% 60%;
+  }
+
+  .retro {
+    --background: 39 70% 95%;
+    --foreground: 20 40% 20%;
+
+    --card: 39 70% 95%;
+    --card-foreground: 20 40% 20%;
+
+    --popover: 39 70% 95%;
+    --popover-foreground: 20 40% 20%;
+
+    --primary: 20 80% 48%;
+    --primary-foreground: 39 70% 95%;
+
+    --secondary: 39 30% 80%;
+    --secondary-foreground: 20 40% 20%;
+
+    --muted: 39 30% 90%;
+    --muted-foreground: 20 40% 40%;
+
+    --accent: 20 80% 48%;
+    --accent-foreground: 39 70% 95%;
+
+    --destructive: 0 80% 50%;
+    --destructive-foreground: 39 70% 95%;
+
+    --border: 20 40% 40%;
+    --input: 20 40% 40%;
+    --ring: 20 80% 48%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Animação para a coroa */
+@keyframes float {
+  0% {
+    transform: translateX(-50%) translateY(0px);
+  }
+  50% {
+    transform: translateX(-50%) translateY(-10px);
+  }
+  100% {
+    transform: translateX(-50%) translateY(0px);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.03);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.twisted-container {
+  transform: skew(-2deg);
+  animation: pulse 1.5s infinite ease-in-out;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.crown {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 24px;
+  animation: float 2s ease-in-out infinite;
+}
+
+/* Estilos para os blocos de letras */
+.letter-box {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  margin: 0 4px;
+  font-size: 1.25rem;
+  font-weight: bold;
+  position: relative;
+}
+
+.letter-box::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 15%;
+  width: 70%;
+  height: 3px;
+  background-color: #6366f1;
+  border-radius: 1px;
+}
+
+.keyboard-button {
+  @apply w-10 h-10 rounded-md flex items-center justify-center font-bold text-white bg-primary hover:bg-primary/80 transition-colors;
+}
+
+.keyboard-button.used {
+  @apply bg-muted text-muted-foreground cursor-not-allowed;
+}
+
+.player-turn {
+  @apply border-2 border-yellow-500;
+}
+
+.player-avatar {
+  @apply w-12 h-12 rounded-full overflow-hidden border-2 border-primary;
+}
+
+.player-score {
+  @apply px-3 py-1 rounded-md bg-pink-100 text-pink-600 font-bold text-lg;
+}
+
+.timer-bar {
+  @apply h-2 bg-primary rounded-full transition-all;
+}
