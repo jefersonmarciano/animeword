@@ -260,7 +260,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     const root = document.documentElement;
 
     // Remover todas as classes de tema
-    root.classList.remove("dark", "neon", "retro");
+    root.classList.remove("light", "dark", "neon", "retro");
 
     // Aplicar o tema selecionado
     switch (visualTheme) {
@@ -274,7 +274,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         root.classList.add("retro");
         break;
       default:
-        // Tema padrão, não precisa adicionar classe
+        root.classList.add("light");
         break;
     }
   };
