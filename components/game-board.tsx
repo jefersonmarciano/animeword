@@ -15,6 +15,7 @@ import GameRules from "./game-rules";
 // Importar os modais
 import SuccessModal from "@/components/success-modal";
 import GameOverModal from "@/components/game-over-modal";
+import VictoryModal from "@/components/victory-modal";
 
 export default function GameBoard({
   onBackToConfig,
@@ -39,10 +40,12 @@ export default function GameBoard({
     setShowSuccessModal,
     startNewRound,
     getCurrentPlayerErrors,
+    pointsToWin,
   } = useGame();
 
   const [wordGuess, setWordGuess] = useState("");
   const [showGameOverModal, setShowGameOverModal] = useState(false);
+  const [showVictoryModal, setShowVictoryModal] = useState(false);
   const [correctLetters, setCorrectLetters] = useState<string[]>([]);
   const [remainingTime, setRemainingTime] = useState(timeLeft);
   const [soundEnabled, setSoundEnabled] = useState(true);
@@ -83,6 +86,19 @@ export default function GameBoard({
       console.log = originalConsoleLog;
     };
   }, [currentQuestion]);
+
+  // Atualizar para mostrar o modal de game over ou vitória quando o jogo acabar
+  useEffect(() => {
+    if (gameOver) {
+      // Verificar se algum jogador atingiu a pontuação para vitória
+      const winner = players.find((player) => player.score >= pointsToWin);
+      if (winner) {
+        setShowVictoryModal(true);
+      } else {
+        setShowGameOverModal(true);
+      }
+    }
+  }, [gameOver, players, pointsToWin]);
 
   // Renderizar os espaços para as letras da palavra
   const renderWordSpaces = () => {
@@ -160,11 +176,6 @@ export default function GameBoard({
     );
   };
 
-  // Atualizar para mostrar o modal de game over em vez de renderizar uma página diferente
-  if (gameOver && !showGameOverModal) {
-    setShowGameOverModal(true);
-  }
-
   // Função para reiniciar o jogo após game over
   const handleRestart = () => {
     setShowGameOverModal(false);
@@ -175,6 +186,20 @@ export default function GameBoard({
   // Função para voltar às configurações após game over
   const handleBackToConfig = () => {
     setShowGameOverModal(false);
+    setGameOver(false);
+    onBackToConfig();
+  };
+
+  // Função para reiniciar o jogo após vitória
+  const handleVictoryRestart = () => {
+    setShowVictoryModal(false);
+    setGameOver(false);
+    resetGame();
+  };
+
+  // Função para voltar às configurações após vitória
+  const handleVictoryBackToConfig = () => {
+    setShowVictoryModal(false);
     setGameOver(false);
     onBackToConfig();
   };
@@ -205,6 +230,15 @@ export default function GameBoard({
           onClose={() => setShowGameOverModal(false)}
           onRestart={handleRestart}
           onBackToConfig={handleBackToConfig}
+        />
+
+        {/* Modal de Vitória */}
+        <VictoryModal
+          isOpen={showVictoryModal}
+          onClose={() => setShowVictoryModal(false)}
+          onRestart={handleVictoryRestart}
+          onBackToConfig={handleVictoryBackToConfig}
+          winner={players.find((player) => player.score >= pointsToWin)}
         />
 
         {/* Coluna da esquerda - Jogadores */}
@@ -247,11 +281,11 @@ export default function GameBoard({
           </div>
 
           {/* Área dos jogadores */}
-          <div className="space-y-3">
+          <div className="mobile-players">
             {players.map((player, index) => (
               <div
                 key={player.id}
-                className={`p-3 ${
+                className={`player-card p-3 ${
                   index === currentPlayerIndex
                     ? "gartic-card-highlight border-[#4cc9f0]"
                     : "gartic-card-highlight"
