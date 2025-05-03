@@ -1,11 +1,11 @@
 "use client"
-import Image from "next/image"
-import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Input } from "@/components/ui/input"
 import { Slider } from "@/components/ui/slider"
 import { useGame, type GameMode, type Theme } from "@/context/game-context"
-import { Cog, Users, Trophy, RefreshCw } from "lucide-react"
+import { Cog, Users, Play } from "lucide-react"
+import PlayerCard from "./player-card"
+import GameRules from "./game-rules"
 
 export default function GameConfig({ onStartGame }: { onStartGame: () => void }) {
   const {
@@ -41,9 +41,9 @@ export default function GameConfig({ onStartGame }: { onStartGame: () => void })
   }
 
   // Trocar avatar do jogador
-  const changePlayerAvatar = (id: number) => {
+  const changePlayerAvatar = (id: number, newAvatar?: string) => {
     const updatedPlayers = players.map((player) =>
-      player.id === id ? { ...player, avatar: getRandomAvatar() } : player,
+      player.id === id ? { ...player, avatar: newAvatar || getRandomAvatar() } : player,
     )
     setPlayers(updatedPlayers)
   }
@@ -56,160 +56,117 @@ export default function GameConfig({ onStartGame }: { onStartGame: () => void })
   }
 
   return (
-    <div className="bg-card rounded-lg shadow-md p-6 w-full max-w-4xl mx-auto">
-      <h1 className="text-2xl font-bold text-center mb-4">Configuração do Jogo</h1>
-      <div className="border-b border-border mb-6"></div>
-
-      <div className="grid md:grid-cols-2 gap-8">
-        {/* Opções do Jogo */}
-        <div>
-          <div className="flex items-center gap-2 mb-4 text-primary">
-            <Cog className="w-5 h-5" />
-            <h2 className="text-xl font-semibold">Opções do Jogo</h2>
-          </div>
-          <div className="border-b border-primary/30 mb-4"></div>
-
-          <div className="space-y-6">
-            <div>
-              <label className="block mb-2">Número de Jogadores</label>
-              <Select
-                value={numberOfPlayers.toString()}
-                onValueChange={(value) => setNumberOfPlayers(Number.parseInt(value))}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder={`${numberOfPlayers} Jogadores`} />
-                </SelectTrigger>
-                <SelectContent>
-                  {playerOptions.map((num) => (
-                    <SelectItem key={num} value={num.toString()}>
-                      {num} {num === 1 ? "Jogador" : "Jogadores"}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div>
-              <label className="block mb-2">Pontos para Vitória:</label>
-              <div className="flex items-center gap-4">
-                <Slider
-                  value={[pointsToWin]}
-                  min={50}
-                  max={500}
-                  step={10}
-                  onValueChange={(value) => setPointsToWin(value[0])}
-                  className="flex-1"
-                />
-                <div className="bg-primary text-primary-foreground px-3 py-1 rounded-md font-bold">{pointsToWin}</div>
-              </div>
-            </div>
-
-            <div>
-              <label className="block mb-2">Modo de Jogo:</label>
-              <Select value={gameMode} onValueChange={(value) => setGameMode(value as GameMode)}>
-                <SelectTrigger>
-                  <SelectValue placeholder={gameMode} />
-                </SelectTrigger>
-                <SelectContent>
-                  {gameModeOptions.map((mode) => (
-                    <SelectItem key={mode} value={mode}>
-                      {mode}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div>
-              <label className="block mb-2">Tema Visual:</label>
-              <Select value={visualTheme} onValueChange={(value) => setVisualTheme(value as Theme)}>
-                <SelectTrigger>
-                  <SelectValue placeholder={visualTheme} />
-                </SelectTrigger>
-                <SelectContent>
-                  {themeOptions.map((theme) => (
-                    <SelectItem key={theme} value={theme}>
-                      {theme}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-        </div>
-
-        {/* Jogadores */}
-        <div>
-          <div className="flex items-center gap-2 mb-4 text-primary">
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      {/* Coluna da esquerda - Jogadores */}
+      <div className="gartic-card p-5">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="gartic-subtitle flex items-center gap-2">
             <Users className="w-5 h-5" />
-            <h2 className="text-xl font-semibold">Jogadores</h2>
-          </div>
-          <div className="border-b border-primary/30 mb-4"></div>
+            JOGADORES {players.length}/5
+          </h2>
+          <Select
+            value={numberOfPlayers.toString()}
+            onValueChange={(value) => setNumberOfPlayers(Number.parseInt(value))}
+          >
+            <SelectTrigger className="gartic-select w-40">
+              <SelectValue placeholder={`${numberOfPlayers} Jogadores`} />
+            </SelectTrigger>
+            <SelectContent>
+              {playerOptions.map((num) => (
+                <SelectItem key={num} value={num.toString()}>
+                  {num} {num === 1 ? "Jogador" : "Jogadores"}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
 
-          <div className="space-y-4">
-            {players.map((player) => (
-              <div key={player.id} className="flex items-center gap-4 p-4 bg-muted/50 rounded-lg">
-                <div className="flex items-center justify-center w-8 h-8 bg-primary text-primary-foreground rounded-full font-bold">
-                  {player.id}
-                </div>
-                <div className="flex-1">
-                  <label className="text-sm text-muted-foreground">Jogador {player.id}:</label>
-                  <Input
-                    value={player.name}
-                    onChange={(e) => updatePlayerName(player.id, e.target.value)}
-                    className="mt-1"
-                  />
-                </div>
-                <div className="relative group">
-                  <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-primary">
-                    <Image
-                      src={player.avatar || "/placeholder.svg"}
-                      alt={`Avatar do ${player.name}`}
-                      width={48}
-                      height={48}
-                      className="object-cover"
-                    />
-                  </div>
-                  <button
-                    onClick={() => changePlayerAvatar(player.id)}
-                    className="absolute -top-2 -right-2 bg-primary text-primary-foreground rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
-                    title="Trocar avatar"
-                  >
-                    <RefreshCw className="w-3 h-3" />
-                  </button>
-                </div>
+        <div className="space-y-3">
+          {players.map((player) => (
+            <div key={player.id} className="flex items-center gap-4 p-3 gartic-card-highlight rounded-lg">
+              <PlayerCard player={player} isCurrentPlayer={false} onChangeAvatar={changePlayerAvatar} />
+              <div className="flex-1">
+                <Input
+                  value={player.name}
+                  onChange={(e) => updatePlayerName(player.id, e.target.value)}
+                  className="gartic-input"
+                  placeholder={`Jogador ${player.id}`}
+                />
               </div>
-            ))}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Coluna do meio - Configurações */}
+      <div className="gartic-card p-5">
+        <h2 className="gartic-subtitle flex items-center gap-2 mb-4">
+          <Cog className="w-5 h-5" />
+          CONFIGURAÇÕES
+        </h2>
+
+        <div className="space-y-5">
+          <div>
+            <label className="block mb-2 text-white">Pontos para Vitória:</label>
+            <div className="flex items-center gap-4">
+              <Slider
+                value={[pointsToWin]}
+                min={50}
+                max={500}
+                step={10}
+                onValueChange={(value) => setPointsToWin(value[0])}
+                className="flex-1"
+              />
+              <div className="bg-[#4cc9f0] text-[#3a0ca3] px-3 py-1 rounded-md font-bold">{pointsToWin}</div>
+            </div>
+          </div>
+
+          <div>
+            <label className="block mb-2 text-white">Modo de Jogo:</label>
+            <Select value={gameMode} onValueChange={(value) => setGameMode(value as GameMode)}>
+              <SelectTrigger className="gartic-select w-full">
+                <SelectValue placeholder={gameMode} />
+              </SelectTrigger>
+              <SelectContent>
+                {gameModeOptions.map((mode) => (
+                  <SelectItem key={mode} value={mode}>
+                    {mode}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div>
+            <label className="block mb-2 text-white">Tema Visual:</label>
+            <Select value={visualTheme} onValueChange={(value) => setVisualTheme(value as Theme)}>
+              <SelectTrigger className="gartic-select w-full">
+                <SelectValue placeholder={visualTheme} />
+              </SelectTrigger>
+              <SelectContent>
+                {themeOptions.map((theme) => (
+                  <SelectItem key={theme} value={theme}>
+                    {theme}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="pt-4 mt-6">
+            <button
+              onClick={handleStartGame}
+              className="gartic-button-primary w-full flex items-center justify-center gap-2 py-4 text-lg"
+            >
+              <Play className="w-5 h-5" /> INICIAR DESAFIO
+            </button>
           </div>
         </div>
       </div>
 
-      <div className="mt-8 flex justify-center">
-        <Button
-          onClick={handleStartGame}
-          className="bg-yellow-500 hover:bg-yellow-600 text-white px-8 py-6 text-lg font-bold"
-        >
-          INICIAR DESAFIO 🚀
-        </Button>
-      </div>
-
-      {/* Regras do Jogo */}
-      <div className="mt-8 p-6 bg-muted/30 rounded-lg border border-border">
-        <div className="flex items-center gap-2 mb-4 text-amber-500">
-          <Trophy className="w-5 h-5" />
-          <h2 className="text-xl font-semibold">Regras do Jogo</h2>
-        </div>
-
-        <ul className="space-y-2 list-disc pl-6">
-          <li>Cada jogador tenta adivinhar uma letra por vez ou arriscar a palavra completa.</li>
-          <li>Acertar uma letra = +1 ponto por ocorrência da letra.</li>
-          <li>Acertar a palavra completa = +10 pontos.</li>
-          <li>Errar um palpite de palavra completa = -50 pontos!</li>
-          <li>O primeiro jogador a atingir a pontuação para vitória vence o jogo.</li>
-          <li>
-            Dependendo da dificuldade, você terá um número limitado de tentativas (Fácil: 8, Médio: 6, Difícil: 4).
-          </li>
-        </ul>
+      {/* Coluna da direita - Regras */}
+      <div>
+        <GameRules />
       </div>
     </div>
   )

@@ -7,9 +7,10 @@ interface KeyboardProps {
   onKeyPress: (key: string) => void
   guessedLetters: string[]
   wrongLetters: string[]
+  correctLetters: string[]
 }
 
-export default function Keyboard({ onKeyPress, guessedLetters, wrongLetters }: KeyboardProps) {
+export default function Keyboard({ onKeyPress, guessedLetters, wrongLetters, correctLetters }: KeyboardProps) {
   const [activeTab, setActiveTab] = useState("letras")
 
   const letters = [
@@ -30,12 +31,20 @@ export default function Keyboard({ onKeyPress, guessedLetters, wrongLetters }: K
     [".", ",", "!", "?", "/"],
   ]
 
+  // Update the getKeyClass function to use green for correct letters
+  const getKeyClass = (key: string) => {
+    if (correctLetters.includes(key)) return "keyboard-button correct"
+    if (wrongLetters.includes(key)) return "keyboard-button wrong"
+    if (guessedLetters.includes(key)) return "keyboard-button used"
+    return "keyboard-button"
+  }
+
   const isKeyUsed = (key: string) => {
-    return guessedLetters.includes(key) || wrongLetters.includes(key)
+    return guessedLetters.includes(key) || wrongLetters.includes(key) || correctLetters.includes(key)
   }
 
   return (
-    <div>
+    <div className="keyboard-container">
       <Tabs defaultValue="letras" value={activeTab} onValueChange={setActiveTab}>
         <TabsList className="grid grid-cols-3 mb-4">
           <TabsTrigger value="letras">Letras</TabsTrigger>
@@ -45,11 +54,11 @@ export default function Keyboard({ onKeyPress, guessedLetters, wrongLetters }: K
 
         <TabsContent value="letras" className="space-y-2">
           {letters.map((row, rowIndex) => (
-            <div key={`row-${rowIndex}`} className="flex justify-center gap-2">
+            <div key={`row-${rowIndex}`} className="flex justify-center gap-1 sm:gap-2">
               {row.map((letter) => (
                 <button
                   key={letter}
-                  className={`keyboard-button ${isKeyUsed(letter) ? "used" : ""}`}
+                  className={getKeyClass(letter)}
                   onClick={() => onKeyPress(letter)}
                   disabled={isKeyUsed(letter)}
                 >
@@ -62,11 +71,11 @@ export default function Keyboard({ onKeyPress, guessedLetters, wrongLetters }: K
 
         <TabsContent value="numeros" className="space-y-2">
           {numbers.map((row, rowIndex) => (
-            <div key={`row-${rowIndex}`} className="flex justify-center gap-2">
+            <div key={`row-${rowIndex}`} className="flex justify-center gap-1 sm:gap-2">
               {row.map((num) => (
                 <button
                   key={num}
-                  className={`keyboard-button ${isKeyUsed(num) ? "used" : ""}`}
+                  className={getKeyClass(num)}
                   onClick={() => onKeyPress(num)}
                   disabled={isKeyUsed(num)}
                 >
@@ -79,11 +88,11 @@ export default function Keyboard({ onKeyPress, guessedLetters, wrongLetters }: K
 
         <TabsContent value="especiais" className="space-y-2">
           {specialChars.map((row, rowIndex) => (
-            <div key={`row-${rowIndex}`} className="flex justify-center gap-2">
+            <div key={`row-${rowIndex}`} className="flex justify-center gap-1 sm:gap-2">
               {row.map((char) => (
                 <button
                   key={char}
-                  className={`keyboard-button ${isKeyUsed(char) ? "used" : ""}`}
+                  className={getKeyClass(char)}
                   onClick={() => onKeyPress(char)}
                   disabled={isKeyUsed(char)}
                 >

@@ -67,13 +67,13 @@
 
   .neon {
     --background: 240 100% 8%;
-    --foreground: 120 100% 50%;
+    --foreground: 0 0% 98%;
 
     --card: 240 100% 8%;
-    --card-foreground: 120 100% 50%;
+    --card-foreground: 0 0% 98%;
 
     --popover: 240 100% 8%;
-    --popover-foreground: 120 100% 50%;
+    --popover-foreground: 0 0% 98%;
 
     --primary: 320 100% 60%;
     --primary-foreground: 0 0% 98%;
@@ -82,7 +82,7 @@
     --secondary-foreground: 0 0% 98%;
 
     --muted: 240 50% 20%;
-    --muted-foreground: 120 100% 50%;
+    --muted-foreground: 0 0% 70%;
 
     --accent: 120 100% 50%;
     --accent-foreground: 0 0% 98%;
@@ -148,24 +148,6 @@
   }
 }
 
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.03);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
-.twisted-container {
-  transform: skew(-2deg);
-  animation: pulse 1.5s infinite ease-in-out;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
 .crown {
   position: absolute;
   top: -20px;
@@ -202,6 +184,26 @@
   border-radius: 1px;
 }
 
+/* Add these animations for letter reveal */
+@keyframes letterReveal {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.letter-reveal {
+  animation: letterReveal 0.3s ease-out forwards;
+}
+
+/* Update keyboard button colors */
 .keyboard-button {
   @apply w-10 h-10 rounded-md flex items-center justify-center font-bold text-white bg-primary hover:bg-primary/80 transition-colors;
 }
@@ -210,12 +212,20 @@
   @apply bg-muted text-muted-foreground cursor-not-allowed;
 }
 
+.keyboard-button.correct {
+  @apply bg-green-500 text-white cursor-not-allowed;
+}
+
+.keyboard-button.wrong {
+  @apply bg-red-500 text-white cursor-not-allowed;
+}
+
 .player-turn {
   @apply border-2 border-yellow-500;
 }
 
 .player-avatar {
-  @apply w-12 h-12 rounded-full overflow-hidden border-2 border-primary;
+  @apply w-12 h-12 rounded-full overflow-hidden border-2 border-primary cursor-pointer hover:border-yellow-500 transition-all;
 }
 
 .player-score {
@@ -223,5 +233,457 @@
 }
 
 .timer-bar {
-  @apply h-2 bg-primary rounded-full transition-all;
+  @apply h-2 bg-primary rounded-full transition-all duration-1000 ease-linear;
+}
+
+.game-section {
+  @apply border border-border rounded-lg p-4 bg-card shadow-sm;
+}
+
+.game-section-title {
+  @apply text-lg font-semibold text-primary mb-2 flex items-center gap-2;
+}
+
+/* Gartic Phone style */
+.gartic-container {
+  background-color: #7b2cbf;
+  min-height: 100vh;
+  padding: 1rem;
+}
+@media (min-width: 640px) {
+  .gartic-container {
+    padding: 2rem;
+  }
+}
+
+.gartic-card {
+  background-color: #5a189a;
+  border-radius: 0.75rem;
+  border: 2px solid #9d4edd;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+.gartic-card-highlight {
+  background-color: #7b2cbf;
+  border-radius: 0.75rem;
+  border: 2px solid #c77dff;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.gartic-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.gartic-subtitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #c77dff;
+  margin-bottom: 0.5rem;
+}
+
+.gartic-button {
+  background-color: #3a0ca3;
+  color: white;
+  font-weight: 700;
+  padding: 0.75rem 1.5rem;
+  border-radius: 9999px;
+  border: 2px solid #7209b7;
+  transition-property: all;
+  transition-duration: 200ms;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+.gartic-button:hover {
+  background-color: #4361ee;
+}
+
+.gartic-button-primary {
+  background-color: #4cc9f0;
+  color: #3a0ca3;
+  font-weight: 700;
+  padding: 0.75rem 1.5rem;
+  border-radius: 9999px;
+  border: 2px solid #4361ee;
+  transition-property: all;
+  transition-duration: 200ms;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+.gartic-button-primary:hover {
+  background-color: #4895ef;
+}
+
+.gartic-input {
+  background-color: #7b2cbf;
+  border: 2px solid #9d4edd;
+  border-radius: 0.5rem;
+  color: white;
+  padding: 0.5rem 1rem;
+}
+.gartic-input:focus {
+  border-color: #c77dff;
+  outline: none;
+  box-shadow: 0 0 0 2px #c77dff;
+}
+
+.gartic-select {
+  background-color: #7b2cbf;
+  border: 2px solid #9d4edd;
+  border-radius: 0.5rem;
+  color: white;
+  padding: 0.5rem 1rem;
+}
+.gartic-select:focus {
+  border-color: #c77dff;
+  outline: none;
+  box-shadow: 0 0 0 2px #c77dff;
+}
+
+.gartic-rules {
+  background-color: #5a189a;
+  border-radius: 0.75rem;
+  border: 2px solid #9d4edd;
+  padding: 1rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.gartic-rules-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #4cc9f0;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.gartic-rules-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.gartic-rules-number {
+  background-color: #7b2cbf;
+  color: white;
+  font-weight: 700;
+  border-radius: 9999px;
+  width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.gartic-rules-text {
+  color: white;
+  font-size: 0.875rem;
+}
+
+/* Responsividade */
+@media (max-width: 640px) {
+  .letter-box {
+    width: 30px;
+    height: 30px;
+    font-size: 1rem;
+    margin: 0 2px;
+  }
+
+  .keyboard-button {
+    @apply w-8 h-8 text-sm;
+  }
+}
+
+/* Animação de roleta para avatares */
+@keyframes spin {
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    transform: scale(1.2) rotate(180deg);
+  }
+  100% {
+    transform: scale(1) rotate(360deg);
+  }
+}
+
+.avatar-spin {
+  animation: spin 0.5s ease-in-out;
+}
+
+.avatar-highlight {
+  box-shadow: 0 0 15px 5px rgba(255, 215, 0, 0.7);
+  transform: scale(1.1);
+  z-index: 10;
+}
+
+/* Temas completos */
+html.gartic {
+  background-color: #7b2cbf;
+  color: white;
+}
+
+html.dark {
+  background-color: #121212;
+  color: white;
+}
+
+html.dark .gartic-container {
+  background-color: #121212;
+}
+
+html.dark .gartic-card {
+  background-color: #1e1e1e;
+  border-color: #333;
+}
+
+html.dark .gartic-card-highlight {
+  background-color: #2d2d2d;
+  border-color: #444;
+}
+
+html.dark .gartic-button {
+  background-color: #333;
+  border-color: #444;
+}
+
+html.dark .gartic-button-primary {
+  background-color: #0070f3;
+  color: white;
+  border-color: #0060df;
+}
+
+html.dark .gartic-rules {
+  background-color: #1e1e1e;
+  border-color: #333;
+}
+
+html.neon {
+  background-color: #000;
+  color: #fff;
+}
+
+html.neon .gartic-container {
+  background-color: #000;
+}
+
+html.neon .gartic-card {
+  background-color: #111;
+  border-color: #0ff;
+  box-shadow: 0 0 10px #0ff, 0 0 20px rgba(0, 255, 255, 0.3);
+}
+
+html.neon .gartic-card-highlight {
+  background-color: #111;
+  border-color: #f0f;
+  box-shadow: 0 0 10px #f0f, 0 0 20px rgba(255, 0, 255, 0.3);
+}
+
+html.neon .gartic-button {
+  background-color: #111;
+  border-color: #0ff;
+  color: #0ff;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+}
+
+html.neon .gartic-button-primary {
+  background-color: #111;
+  border-color: #f0f;
+  color: #f0f;
+  box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+}
+
+html.neon .gartic-rules {
+  background-color: #111;
+  border-color: #0f0;
+  box-shadow: 0 0 10px #0f0, 0 0 20px rgba(0, 255, 0, 0.3);
+}
+
+/* Update the retro theme to ensure text is black except in inputs/selectable elements */
+
+/* Retro theme specific styles */
+html.retro .gartic-container {
+  background-color: #f5e6c8;
+}
+
+html.retro .gartic-card {
+  background-color: #f8f0dd;
+  border-color: #8b4513;
+}
+
+html.retro .gartic-card-highlight {
+  background-color: #f8f0dd;
+  border-color: #a0522d;
+}
+
+html.retro .gartic-button {
+  background-color: #8b4513;
+  border-color: #5c4033;
+  color: #f5e6c8;
+}
+
+html.retro .gartic-button-primary {
+  background-color: #a0522d;
+  border-color: #8b4513;
+  color: #f5e6c8;
+}
+
+html.retro .gartic-rules {
+  background-color: #f8f0dd;
+  border-color: #8b4513;
+}
+
+/* Fix text colors in retro theme */
+html.retro .text-white,
+html.retro p:not(.gartic-input *, .gartic-select *),
+html.retro h1:not(.gartic-input *, .gartic-select *),
+html.retro h2:not(.gartic-input *, .gartic-select *),
+html.retro h3:not(.gartic-input *, .gartic-select *),
+html.retro div:not(.gartic-input *, .gartic-select *) {
+  color: #5c4033;
+}
+
+html.retro .gartic-rules-text,
+html.retro .gartic-subtitle,
+html.retro .gartic-title {
+  color: #5c4033;
+}
+
+/* Keep text white in buttons and interactive elements */
+html.retro .gartic-button,
+html.retro .gartic-button-primary,
+html.retro button:not([class*="text-"]) {
+  color: #f5e6c8;
+}
+
+html.retro .gartic-input,
+html.retro .gartic-select {
+  color: #5c4033;
+  background-color: #f8f0dd;
+}
+
+/* Countdown timer */
+.countdown-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  pointer-events: none; /* Allow clicks to pass through */
+}
+
+.countdown-number {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 120px;
+  font-weight: bold;
+  color: white;
+}
+
+.countdown-diamond {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #7b2cbf;
+  transform: rotate(45deg);
+  border-radius: 24px;
+  z-index: -1;
+}
+
+.countdown-lights {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+.countdown-light {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-color: #ffcc00;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #ffcc00, 0 0 20px rgba(255, 204, 0, 0.5);
+}
+
+/* Avatar selector animation */
+@keyframes avatarRoll {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.avatar-roll-container {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  overflow: hidden;
+  margin: 0 auto;
+  border-radius: 12px;
+  border: 3px solid #ffcc00;
+  box-shadow: 0 0 15px rgba(255, 204, 0, 0.7);
+}
+
+.avatar-roll-item {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  animation: avatarRoll 0.2s ease-in-out;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 1023px) {
+  .grid-cols-1 {
+    grid-template-columns: 1fr;
+  }
+
+  .game-layout {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .game-column {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+
+  .letter-box {
+    width: 28px;
+    height: 28px;
+    font-size: 0.875rem;
+  }
+
+  .keyboard-button {
+    width: 32px;
+    height: 32px;
+    font-size: 0.75rem;
+  }
+}
+
+/* Wider center column */
+.game-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr 1fr;
+  gap: 1rem;
+}
+
+@media (max-width: 1023px) {
+  .game-layout {
+    grid-template-columns: 1fr;
+  }
 }
