@@ -1,30 +1,36 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import Image from "next/image"
-import type { Player } from "@/context/game-context"
-import AvatarSelectorModal from "./avatar-selector-modal"
+import { useState } from "react";
+import Image from "next/image";
+import type { Player } from "@/context/game-context";
+import AvatarSelectorModal from "./avatar-selector-modal";
 
 interface PlayerCardProps {
-  player: Player
-  isCurrentPlayer: boolean
-  onChangeAvatar?: (playerId: number, avatar: string) => void
+  player: Player;
+  isCurrentPlayer: boolean;
+  isCurrentUser?: boolean;
+  onChangeAvatar?: (playerId: number, avatar: string) => void;
 }
 
-export default function PlayerCard({ player, isCurrentPlayer, onChangeAvatar }: PlayerCardProps) {
-  const [showAvatarModal, setShowAvatarModal] = useState(false)
+export default function PlayerCard({
+  player,
+  isCurrentPlayer,
+  isCurrentUser,
+  onChangeAvatar,
+}: PlayerCardProps) {
+  const [showAvatarModal, setShowAvatarModal] = useState(false);
 
   const handleAvatarClick = () => {
     if (onChangeAvatar) {
-      setShowAvatarModal(true)
+      setShowAvatarModal(true);
     }
-  }
+  };
 
   const handleSelectAvatar = (avatar: string) => {
     if (onChangeAvatar) {
-      onChangeAvatar(player.id, avatar)
+      onChangeAvatar(player.id, avatar);
     }
-  }
+  };
 
   return (
     <div
@@ -36,7 +42,9 @@ export default function PlayerCard({ player, isCurrentPlayer, onChangeAvatar }: 
 
       <div className="flex flex-col items-center">
         <div
-          className={`player-avatar mb-2 ${onChangeAvatar ? "cursor-pointer" : ""}`}
+          className={`player-avatar mb-2 ${
+            onChangeAvatar ? "cursor-pointer" : ""
+          }`}
           onClick={handleAvatarClick}
           title={onChangeAvatar ? "Clique para mudar o avatar" : ""}
         >
@@ -63,5 +71,5 @@ export default function PlayerCard({ player, isCurrentPlayer, onChangeAvatar }: 
         />
       )}
     </div>
-  )
+  );
 }

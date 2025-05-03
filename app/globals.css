@@ -695,3 +695,8 @@ html.retro .gartic-select {
     grid-template-columns: 1fr;
   }
 }
+
+/* Fix para o erro cz-shortcut-listen */
+body[cz-shortcut-listen="true"] {
+  background-color: inherit;
+}
