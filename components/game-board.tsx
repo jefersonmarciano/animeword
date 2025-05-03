@@ -49,6 +49,10 @@ export default function GameBoard({
   const [correctLetters, setCorrectLetters] = useState<string[]>([]);
   const [remainingTime, setRemainingTime] = useState(timeLeft);
   const [soundEnabled, setSoundEnabled] = useState(true);
+  const [currentCorrectWord, setCurrentCorrectWord] = useState<{
+    word: string;
+    hint: string;
+  } | null>(null);
 
   // Atualizar o tempo restante quando timeLeft mudar
   useEffect(() => {
@@ -99,6 +103,16 @@ export default function GameBoard({
       }
     }
   }, [gameOver, players, pointsToWin]);
+
+  // Quando o modal de sucesso é aberto, vamos armazenar a palavra atual
+  useEffect(() => {
+    if (showSuccessModal && currentQuestion) {
+      setCurrentCorrectWord({
+        word: currentQuestion.word,
+        hint: currentQuestion.hint,
+      });
+    }
+  }, [showSuccessModal, currentQuestion]);
 
   // Renderizar os espaços para as letras da palavra
   const renderWordSpaces = () => {
@@ -214,13 +228,13 @@ export default function GameBoard({
   return (
     <>
       <div className="game-layout">
-        {/* Modal de Sucesso */}
-        {currentQuestion && (
+        {/* Modal de Sucesso - Agora usando currentCorrectWord que não muda */}
+        {currentCorrectWord && (
           <SuccessModal
             isOpen={showSuccessModal}
             onClose={startNewRound}
-            word={currentQuestion.word}
-            hint={currentQuestion.hint}
+            word={currentCorrectWord.word}
+            hint={currentCorrectWord.hint}
           />
         )}
 

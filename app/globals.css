@@ -171,6 +171,7 @@
   font-size: 1.25rem;
   font-weight: bold;
   position: relative;
+  color: white;
 }
 
 .letter-box::after {
@@ -246,7 +247,7 @@
 
 /* Gartic Phone style */
 .gartic-container {
-  background-color: #7b2cbf;
+  background-color: #1e1e2e;
   min-height: 100vh;
   padding: 1rem;
 }
@@ -260,17 +261,20 @@
   background-color: #5a189a;
   border-radius: 0.75rem;
   border: 2px solid #9d4edd;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
   overflow: hidden;
 }
 
+/* Players card. */
 .gartic-card-highlight {
   background-color: #7b2cbf;
   border-radius: 0.75rem;
   border: 2px solid #c77dff;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
-
+/* Players card. */
 .gartic-title {
   font-size: 1.5rem;
   font-weight: 700;
@@ -295,7 +299,8 @@
   border: 2px solid #7209b7;
   transition-property: all;
   transition-duration: 200ms;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 .gartic-button:hover {
   background-color: #4361ee;
@@ -310,7 +315,8 @@
   border: 2px solid #4361ee;
   transition-property: all;
   transition-duration: 200ms;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 .gartic-button-primary:hover {
   background-color: #4895ef;
@@ -342,12 +348,14 @@
   box-shadow: 0 0 0 2px #c77dff;
 }
 
+/* Regras. */
 .gartic-rules {
   background-color: #5a189a;
   border-radius: 0.75rem;
   border: 2px solid #9d4edd;
   padding: 1rem;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
 .gartic-rules-title {

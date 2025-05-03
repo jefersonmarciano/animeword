@@ -33,127 +33,127 @@ const getGameQuestions = (): GameQuestion[] => {
   const originalQuestions = [
     // Fácil
     {
-      word: atob("SFRNTAo=").trim(),
-      hint: "Linguagem de marcação para páginas web",
+      word: atob("TkFSVVRPCg==").trim(),
+      hint: "Anime sobre um ninja loiro com uma raposa de nove caudas",
       difficulty: "Fácil",
     },
     {
-      word: atob("Q1NTCg==").trim(),
-      hint: "Estiliza páginas web",
+      word: atob("RE9SQUVNT04K").trim(),
+      hint: "Gato robô azul do futuro com bolso mágico",
       difficulty: "Fácil",
     },
     {
-      word: atob("SkFWQQo=").trim(),
-      hint: "Linguagem orientada a objetos da Oracle",
+      word: atob("T05FIFBJRUNFCg==").trim(),
+      hint: "Anime sobre piratas em busca do maior tesouro do mundo",
       difficulty: "Fácil",
     },
     {
-      word: atob("UFlUSE9OCg==").trim(),
-      hint: "Linguagem com sintaxe simples e indentação obrigatória",
+      word: atob("QVRBUVVFIERPU1MgVElUw4NT").trim(),
+      hint: "Humanidade ameaçada por gigantes",
       difficulty: "Fácil",
     },
     {
-      word: atob("UkVBQ1QK").trim(),
-      hint: "Biblioteca JavaScript para interfaces",
+      word: atob("REVBVEggTk9URQ==").trim(),
+      hint: "Caderno que mata quem tem o nome escrito nele",
       difficulty: "Fácil",
     },
     {
-      word: atob("Tk9ERQo=").trim(),
-      hint: "Runtime JavaScript para backend",
+      word: atob("RFJBRyBCQUxMCg==").trim(),
+      hint: "Anime com esferas que realizam desejos",
       difficulty: "Fácil",
     },
     {
-      word: atob("R0lUCg==").trim(),
-      hint: "Sistema de controle de versão",
+      word: atob("VE9LWU8gR0hPVUw=").trim(),
+      hint: "Humanos que comem carne humana",
       difficulty: "Fácil",
     },
     {
-      word: atob("QVBJCg==").trim(),
-      hint: "Interface para comunicação entre sistemas",
+      word: atob("RlVMTCBNRVRBTA==").trim(),
+      hint: "Irmãos alquimistas em busca da pedra filosofal",
       difficulty: "Fácil",
     },
 
     // Médio
     {
-      word: atob("VFlQRVNDUklQVAo=").trim(),
-      hint: "JavaScript com tipagem estática",
+      word: atob("QkxFQUNICg==").trim(),
+      hint: "Anime sobre shinigamis e espadas zanpakutou",
       difficulty: "Médio",
     },
     {
-      word: atob("RE9DS0VSCg==").trim(),
-      hint: "Plataforma de containerização",
+      word: "DEMON SLAYER",
+      hint: "Caçador de demônios com irmã transformada",
       difficulty: "Médio",
     },
     {
-      word: atob("TU9OR09EQgo=").trim(),
-      hint: "Banco de dados NoSQL",
+      word: atob("SEFJS1lVVQ==").trim(),
+      hint: "Anime sobre vôlei com um protagonista baixinho",
       difficulty: "Médio",
     },
     {
-      word: atob("TkVYVEpTCg==").trim(),
-      hint: "Framework React com SSR",
+      word: atob("TU9CIFBTWUNITw==").trim(),
+      hint: "Garoto com poderes psíquicos tentando ser reconhecido",
       difficulty: "Médio",
     },
     {
-      word: atob("UkVEVVgK").trim(),
-      hint: "Gerenciamento de estado para JavaScript",
+      word: atob("Q09ERSBHRUFTUw==").trim(),
+      hint: "Revolução contra império com mechas",
       difficulty: "Médio",
     },
     {
-      word: atob("QVdTCg==").trim(),
-      hint: "Serviço de computação em nuvem da Amazon",
+      word: atob("U1dPUkQgQVJUIE9OTElORQ==").trim(),
+      hint: "Jogadores presos em um jogo de realidade virtual",
       difficulty: "Médio",
     },
     {
-      word: atob("R1JBUEhRTAo=").trim(),
-      hint: "Linguagem de consulta para APIs",
+      word: atob("SEVMTFNJTkc=").trim(),
+      hint: "Organização que caça vampiros e outros monstros",
       difficulty: "Médio",
     },
     {
-      word: atob("RklSRUJBU0UK").trim(),
-      hint: "Plataforma de desenvolvimento da Google",
+      word: atob("Tk9SQUdBTUk=").trim(),
+      hint: "Deus da calamidade e uma garota sem lar",
       difficulty: "Médio",
     },
 
     // Difícil
     {
-      word: atob("S1VCRVJORVRFUwo=").trim(),
-      hint: "Orquestração de containers",
+      word: atob("U1RFSVlOUyBHQVRF").trim(),
+      hint: "Cientista maluco que viaja no tempo com micro-ondas",
       difficulty: "Difícil",
     },
     {
-      word: atob("V0VCQVNTRU1CTFkK").trim(),
-      hint: "Formato de código binário para browsers",
+      word: atob("TU9OT0dBVEFSSQ==").trim(),
+      hint: "Série de anime com espíritos sobrenaturais e uma protagonista loira",
       difficulty: "Difícil",
     },
     {
-      word: atob("TUlDUk9TRVJWSUNFUwo=").trim(),
-      hint: "Arquitetura de software distribuído",
+      word: atob("UEFSQVNZVEU=").trim(),
+      hint: "Alienígenas que se hospedam em humanos e comem suas cabeças",
       difficulty: "Difícil",
     },
     {
-      word: atob("QkxPQ0tDSEFJTgo=").trim(),
-      hint: "Tecnologia de registro distribuído",
+      word: atob("SlVKVVRTVSBLQUlTRU4=").trim(),
+      hint: "Anime sobre exorcistas que lutam contra maldições",
       difficulty: "Difícil",
     },
     {
-      word: atob("U0VSVkVSTEVTUwo=").trim(),
-      hint: "Modelo de execução de código sem gerenciar servidores",
+      word: atob("RUxBSU5F").trim(),
+      hint: "Anime sobre uma garota afetada por experiências e seus múltiplos corpos",
       difficulty: "Difícil",
     },
     {
-      word: atob("VEVOU09SRkxPVwo=").trim(),
-      hint: "Biblioteca para machine learning",
+      word: atob("QUtJUkE=").trim(),
+      hint: "Filme de anime cyberpunk sobre uma explosão em Neo-Tóquio",
       difficulty: "Difícil",
     },
     {
-      word: atob("RUxBU1RJQ1NFQVJDSAo=").trim(),
-      hint: "Mecanismo de busca e análise",
+      word: atob("QkVSU0VSSw==").trim(),
+      hint: "Manga sombrio sobre um guerreiro com uma espada gigante",
       difficulty: "Difícil",
     },
     {
-      word: atob("V0VCU09DS0VUUwo=").trim(),
-      hint: "Protocolo de comunicação bidirecional",
+      word: atob("UFNZQy1IT1BBCFM=").trim(),
+      hint: "Detetive com sistema para medir criminalidade",
       difficulty: "Difícil",
     },
   ];
@@ -162,163 +162,163 @@ const getGameQuestions = (): GameQuestion[] => {
   const newQuestions: GameQuestion[] = [
     // Fácil
     {
-      word: "UNITY",
-      hint: "Motor de jogo mais utilizado para desenvolvimento 2D e 3D",
+      word: "GHIBLI",
+      hint: "Estúdio famoso por filmes como A Viagem de Chihiro",
       difficulty: "Fácil",
     },
     {
-      word: "C#",
-      hint: "Linguagem de programação padrão usada na Unity",
+      word: "MAPPA",
+      hint: "Estúdio que animou Attack on Titan: The Final Season",
       difficulty: "Fácil",
     },
     {
-      word: "SPRITE",
-      hint: "Arquivo que representa uma textura em um jogo",
+      word: "TOEI",
+      hint: "Estúdio responsável por Dragon Ball e One Piece",
       difficulty: "Fácil",
     },
     {
-      word: "VIEWPORT",
-      hint: "Área do jogo visível na tela",
+      word: "CRUNCHYROLL",
+      hint: "Plataforma de streaming de animes",
       difficulty: "Fácil",
     },
     {
-      word: "SFX",
-      hint: "Arquivo de áudio para efeitos sonoros curtos",
+      word: "OTAKU",
+      hint: "Termo usado para fãs de anime e mangá",
       difficulty: "Fácil",
     },
     {
-      word: "BGM",
-      hint: "Arquivo de áudio para música de fundo",
+      word: "MANGAKA",
+      hint: "Pessoa que desenha e escreve mangás",
       difficulty: "Fácil",
     },
     {
-      word: "HUD",
-      hint: "Interface que permite ao jogador interagir com o jogo",
+      word: "WAIFU",
+      hint: "Personagem feminina pela qual se tem afeição",
       difficulty: "Fácil",
     },
     {
-      word: "HITBOX",
-      hint: "Área onde os objetos colidem em um game",
+      word: "SHONEN",
+      hint: "Demografia de anime/mangá voltada para garotos adolescentes",
       difficulty: "Fácil",
     },
     {
-      word: "TRIGGER",
-      hint: "Termo usado para objetos que não colidem",
+      word: "ISEKAI",
+      hint: "Gênero de anime onde personagem vai para outro mundo",
       difficulty: "Fácil",
     },
     {
-      word: "COLLIDER",
-      hint: "Sistema responsável por detectar colisões",
+      word: "SAKURA",
+      hint: "Flor de cerejeira, comum em cenas de anime",
       difficulty: "Fácil",
     },
 
     // Médio
     {
-      word: "UNREAL ENGINE",
-      hint: "Motor de jogo conhecido por seus gráficos realistas",
+      word: "MADHOUSE",
+      hint: "Estúdio que produziu Death Note e Hunter x Hunter",
       difficulty: "Médio",
     },
     {
-      word: "GD SCRIPT",
-      hint: "Linguagem de programação usada em scripts do Godot",
+      word: "KYOTO ANIMATION",
+      hint: "Estúdio famoso por suas animações fluidas e belas",
       difficulty: "Médio",
     },
     {
-      word: "FRAME-BY-FRAME",
-      hint: "Técnica de animação quadro a quadro em jogos 2D",
+      word: "UFOTABLE",
+      hint: "Estúdio conhecido por efeitos visuais incríveis em Demon Slayer",
       difficulty: "Médio",
     },
     {
-      word: "BOUNDING BOX",
-      hint: "Técnica de otimização de colisão usando caixas delimitadoras",
+      word: "SHOJO",
+      hint: "Demografia de anime/mangá voltada para garotas adolescentes",
       difficulty: "Médio",
     },
     {
-      word: "SCREEN SPACE",
-      hint: "Sistema de coordenadas com origem no canto superior esquerdo",
+      word: "SEINEN",
+      hint: "Demografia de anime/mangá voltada para homens adultos",
       difficulty: "Médio",
     },
     {
-      word: "RIGIDBODY",
-      hint: "Processo de simular física realista em jogos",
+      word: "JOSEI",
+      hint: "Demografia de anime/mangá voltada para mulheres adultas",
       difficulty: "Médio",
     },
     {
-      word: "CONTROLLER",
-      hint: "Componente que permite controlar o movimento de um personagem",
+      word: "MECHA",
+      hint: "Gênero de anime com robôs gigantes",
       difficulty: "Médio",
     },
     {
-      word: "GAME LOOP",
-      hint: "Conceito de atualizar partes do jogo em ciclos constantes",
+      word: "TSUNDERE",
+      hint: "Arquétipo de personagem inicialmente hostil que se torna afetuoso",
       difficulty: "Médio",
     },
     {
-      word: "RIGGING",
-      hint: "Técnica usada para animação de esqueletos",
+      word: "ISEKAI",
+      hint: "Gênero de anime onde o protagonista vai para outro mundo",
       difficulty: "Médio",
     },
     {
-      word: "DEBUG MODE",
-      hint: "Ambiente de teste interno usado por desenvolvedores",
+      word: "SLICE OF LIFE",
+      hint: "Gênero que retrata a vida cotidiana dos personagens",
       difficulty: "Médio",
     },
 
     // Difícil
     {
-      word: "RAY TRACING",
-      hint: "Técnica para simular luz em tempo real",
+      word: "GAINAX",
+      hint: "Estúdio que criou Neon Genesis Evangelion",
       difficulty: "Difícil",
     },
     {
-      word: "PLAYER CHARACTER",
-      hint: "Elemento que representa o jogador",
+      word: "PRODUCTION IG",
+      hint: "Estúdio que produziu Ghost in the Shell e Haikyuu",
       difficulty: "Difícil",
     },
     {
-      word: "FOLLOW CAMERA",
-      hint: "Tipo de câmera que segue o personagem",
+      word: "BONES",
+      hint: "Estúdio responsável por Fullmetal Alchemist e My Hero Academia",
       difficulty: "Difícil",
     },
     {
-      word: "PARTICLE SYSTEM",
-      hint: "Sistema de partículas usado para efeitos visuais",
+      word: "YANDERE",
+      hint: "Arquétipo de personagem que é violento por amor",
       difficulty: "Difícil",
     },
     {
-      word: "GAME MECHANICS",
-      hint: "Conjunto de regras que define a jogabilidade",
+      word: "KUUDERE",
+      hint: "Arquétipo de personagem frio e sem emoções",
       difficulty: "Difícil",
     },
     {
-      word: "PHYSICS ENGINE",
-      hint: "Representação física de objetos no game",
+      word: "NAKAMA",
+      hint: "Palavra japonesa para amigos/companheiros, comum em animes",
       difficulty: "Difícil",
     },
     {
-      word: "TRIGGER ZONE",
-      hint: "Área invisível que ativa eventos no jogo",
+      word: "DOJINSHI",
+      hint: "Mangás feitos por fãs baseados em obras originais",
       difficulty: "Difícil",
     },
     {
-      word: "ON COLLISION",
-      hint: "Evento ativado quando dois objetos colidem",
+      word: "SEIYUU",
+      hint: "Dublador de anime japonês",
       difficulty: "Difícil",
     },
     {
-      word: "SAVE SYSTEM",
-      hint: "Sistema que salva o progresso do jogador",
+      word: "SAKUGA",
+      hint: "Termo para sequências de animação excepcionalmente bem feitas",
       difficulty: "Difícil",
     },
     {
-      word: "MAIN MENU",
-      hint: "Cena inicial que apresenta título e opções",
+      word: "LIGHT NOVEL",
+      hint: "Formato de romance japonês que serve de base para muitos animes",
       difficulty: "Difícil",
     },
   ];
 
   // Combinar as perguntas originais com as novas
-  return [...originalQuestions, ...newQuestions];
+  return [...originalQuestions, ...newQuestions] as GameQuestion[];
 };
 
 // Avatares disponíveis
@@ -392,6 +392,8 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   const [questions] = useState(getGameQuestions);
   // Adicionar estado para controlar perguntas já usadas
   const [usedQuestions, setUsedQuestions] = useState<GameQuestion[]>([]);
+  // Adicionar estado para controlar se a nova rodada está sendo preparada
+  const [isPreparingNewRound, setIsPreparingNewRound] = useState(false);
 
   const [players, setPlayers] = useState<Player[]>([
     {
@@ -639,20 +641,32 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  // Adicionar função para iniciar nova rodada
+  // Modificar função para iniciar nova rodada
   const startNewRound = () => {
-    setCurrentQuestion(getRandomQuestion());
-    setGuessedLetters([]);
-    setWrongLetters([]);
-    setTimeLeft(60);
+    // Marcar que estamos preparando uma nova rodada
+    setIsPreparingNewRound(true);
+
+    // Primeiro fechamos o modal
     setShowSuccessModal(false);
 
-    // Resetar os erros de todos os jogadores para a nova rodada
-    const updatedPlayers = [...players];
-    updatedPlayers.forEach((player) => {
-      player.errors = 0;
-    });
-    setPlayers(updatedPlayers);
+    // Usamos um setTimeout com delay maior para garantir que
+    // o modal seja completamente fechado antes de atualizar a questão
+    setTimeout(() => {
+      setCurrentQuestion(getRandomQuestion());
+      setGuessedLetters([]);
+      setWrongLetters([]);
+      setTimeLeft(60);
+
+      // Resetar os erros de todos os jogadores para a nova rodada
+      const updatedPlayers = [...players];
+      updatedPlayers.forEach((player) => {
+        player.errors = 0;
+      });
+      setPlayers(updatedPlayers);
+
+      // Desmarcar que terminamos de preparar a nova rodada
+      setIsPreparingNewRound(false);
+    }, 300); // Aumentar para 300ms para garantir que o modal esteja completamente fechado
   };
 
   // Passar para o próximo jogador
