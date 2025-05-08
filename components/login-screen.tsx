@@ -1,67 +1,65 @@
 "use client";
 
+import type React from "react";
+
 import { useState } from "react";
-import { useAuth } from "@/context/auth-context";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { useAuth } from "@/context/auth-context";
+import { LogIn, UserPlus } from "lucide-react";
 
 export default function LoginScreen() {
+  const { login, loginAsGuest } = useAuth();
   const [nickname, setNickname] = useState("");
-  const { simpleLogin, loading, loginError } = useAuth();
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    simpleLogin(nickname);
+    if (nickname.trim()) {
+      login(nickname.trim());
+    }
   };
 
   return (
-    <div className="w-full max-w-md mx-auto p-6 gartic-card">
-      <div className="text-center mb-8">
-        <Image
-          src="/images/logo.png"
-          alt="AnimeWord Logo"
-          width={200}
-          height={100}
-          className="mx-auto mb-4"
-          priority
-        />
-        <h1 className="gartic-title">Bem-vindo ao AnimeWord Online!</h1>
-      </div>
+    <div className="flex flex-col items-center justify-center">
+      <div className="gartic-card p-6 w-full max-w-md">
+        <h2 className="text-center text-xl font-bold text-white mb-6">
+          ENTRAR NO AnimeWord
+        </h2>
 
-      <form onSubmit={handleLogin} className="space-y-4">
-        {loginError && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-            {loginError}
+        <form onSubmit={handleLogin} className="space-y-4">
+          <div className="space-y-2">
+            <label htmlFor="nickname" className="block text-foreground">
+              Seu apelido:
+            </label>
+            <Input
+              id="nickname"
+              type="text"
+              value={nickname}
+              onChange={(e) => setNickname(e.target.value)}
+              placeholder="Digite seu apelido"
+              className="gartic-input w-full"
+              required
+            />
           </div>
-        )}
 
-        <div>
-          <label className="block text-white mb-2">Seu Apelido:</label>
-          <Input
-            type="text"
-            value={nickname}
-            onChange={(e) => setNickname(e.target.value)}
-            className="gartic-input"
-            placeholder="Como quer ser chamado no jogo?"
-            required
-            autoFocus
-            maxLength={20}
-          />
-        </div>
+          <div className="pt-2 space-y-3">
+            <Button
+              type="submit"
+              className="gartic-button-primary w-full flex items-center justify-center gap-2"
+            >
+              <LogIn className="w-5 h-5" /> ENTRAR
+            </Button>
 
-        <Button
-          type="submit"
-          className="gartic-button-primary w-full"
-          disabled={loading || !nickname.trim()}
-        >
-          {loading ? "Entrando..." : "Entrar no Jogo"}
-        </Button>
-
-        <p className="text-sm text-center text-white/70 mt-2">
-          Entre com seu apelido para começar a jogar!
-        </p>
-      </form>
+            <Button
+              type="button"
+              onClick={loginAsGuest}
+              className="gartic-button-primary-secondary w-full flex items-center justify-center gap-2 w-full bg-secondary"
+            >
+              <UserPlus className="w-5 h-5" /> ENTRAR COMO CONVIDADO
+            </Button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

@@ -23,6 +23,7 @@ export default function GameConfig({ onStartGame }: { onStartGame: () => void })
     setCurrentQuestion,
     resetGame,
     getRandomAvatar,
+    setUsedQuestions,
   } = useGame()
 
   // Opções para os selects
@@ -50,6 +51,7 @@ export default function GameConfig({ onStartGame }: { onStartGame: () => void })
 
   // Iniciar o jogo
   const handleStartGame = () => {
+    setUsedQuestions([]) // Limpar perguntas usadas ao iniciar novo jogo
     setCurrentQuestion(getRandomQuestion())
     resetGame()
     onStartGame()
@@ -107,7 +109,7 @@ export default function GameConfig({ onStartGame }: { onStartGame: () => void })
 
         <div className="space-y-5">
           <div>
-            <label className="block mb-2 text-white">Pontos para Vitória:</label>
+            <label className="block mb-2">Pontos para Vitória:</label>
             <div className="flex items-center gap-4">
               <Slider
                 value={[pointsToWin]}
@@ -117,12 +119,12 @@ export default function GameConfig({ onStartGame }: { onStartGame: () => void })
                 onValueChange={(value) => setPointsToWin(value[0])}
                 className="flex-1"
               />
-              <div className="bg-[#4cc9f0] text-[#3a0ca3] px-3 py-1 rounded-md font-bold">{pointsToWin}</div>
+              <div className="bg-primary text-primary-foreground px-3 py-1 rounded-md font-bold">{pointsToWin}</div>
             </div>
           </div>
 
           <div>
-            <label className="block mb-2 text-white">Modo de Jogo:</label>
+            <label className="block mb-2">Modo de Jogo:</label>
             <Select value={gameMode} onValueChange={(value) => setGameMode(value as GameMode)}>
               <SelectTrigger className="gartic-select w-full">
                 <SelectValue placeholder={gameMode} />
@@ -138,7 +140,7 @@ export default function GameConfig({ onStartGame }: { onStartGame: () => void })
           </div>
 
           <div>
-            <label className="block mb-2 text-white">Tema Visual:</label>
+            <label className="block mb-2">Tema Visual:</label>
             <Select value={visualTheme} onValueChange={(value) => setVisualTheme(value as Theme)}>
               <SelectTrigger className="gartic-select w-full">
                 <SelectValue placeholder={visualTheme} />

@@ -26,299 +26,165 @@ export type GameQuestion = {
   difficulty: Difficulty;
 };
 
-// Banco de perguntas - Vamos ofuscar isso para não ficar facilmente visível no inspetor
-// Usando uma função para gerar as perguntas em tempo de execução
+// Banco de perguntas
 const getGameQuestions = (): GameQuestion[] => {
-  // Perguntas originais
-  const originalQuestions = [
+  return [
     // Fácil
     {
-      word: atob("TkFSVVRPCg==").trim(),
-      hint: "Anime sobre um ninja loiro com uma raposa de nove caudas",
+      word: "NARUTO",
+      hint: "Ninja que sonha em se tornar Hokage",
       difficulty: "Fácil",
     },
     {
-      word: atob("RE9SQUVNT04K").trim(),
-      hint: "Gato robô azul do futuro com bolso mágico",
+      word: "GOKU",
+      hint: "Protagonista de Dragon Ball que é um Saiyajin",
       difficulty: "Fácil",
     },
     {
-      word: atob("T05FIFBJRUNFCg==").trim(),
-      hint: "Anime sobre piratas em busca do maior tesouro do mundo",
+      word: "LIGHT",
+      hint: "Estudante que encontra um Death Note",
       difficulty: "Fácil",
     },
     {
-      word: atob("QVRBUVVFIERPU1MgVElUw4NT").trim(),
-      hint: "Humanidade ameaçada por gigantes",
+      word: "EREN",
+      hint: "Jovem que busca vingança contra os Titãs",
       difficulty: "Fácil",
     },
     {
-      word: atob("REVBVEggTk9URQ==").trim(),
-      hint: "Caderno que mata quem tem o nome escrito nele",
+      word: "L",
+      hint: "Detetive genial que investiga o caso Kira",
       difficulty: "Fácil",
     },
     {
-      word: atob("RFJBRyBCQUxMCg==").trim(),
-      hint: "Anime com esferas que realizam desejos",
+      word: "SAITAMA",
+      hint: "Herói que derrota inimigos com um soco",
       difficulty: "Fácil",
     },
     {
-      word: atob("VE9LWU8gR0hPVUw=").trim(),
-      hint: "Humanos que comem carne humana",
+      word: "DEKU",
+      hint: "Protagonista de My Hero Academia",
       difficulty: "Fácil",
     },
     {
-      word: atob("RlVMTCBNRVRBTA==").trim(),
-      hint: "Irmãos alquimistas em busca da pedra filosofal",
+      word: "TANJIRO",
+      hint: "Caçador de demônios que busca curar sua irmã",
+      difficulty: "Fácil",
+    },
+    {
+      word: "LEVI",
+      hint: "Soldado mais forte da humanidade em Attack on Titan",
+      difficulty: "Fácil",
+    },
+    {
+      word: "ZORO",
+      hint: "Espadachim que se perde facilmente em One Piece",
       difficulty: "Fácil",
     },
 
     // Médio
     {
-      word: atob("QkxFQUNICg==").trim(),
-      hint: "Anime sobre shinigamis e espadas zanpakutou",
+      word: "KAKASHI",
+      hint: "Ninja que sempre lê o livro Icha Icha",
       difficulty: "Médio",
     },
     {
-      word: "DEMON SLAYER",
-      hint: "Caçador de demônios com irmã transformada",
+      word: "VEGETA",
+      hint: "Príncipe dos Saiyajins que rivaliza com Goku",
       difficulty: "Médio",
     },
     {
-      word: atob("SEFJS1lVVQ==").trim(),
-      hint: "Anime sobre vôlei com um protagonista baixinho",
+      word: "MISA",
+      hint: "Idol que apoia Kira no Death Note",
       difficulty: "Médio",
     },
     {
-      word: atob("TU9CIFBTWUNITw==").trim(),
-      hint: "Garoto com poderes psíquicos tentando ser reconhecido",
+      word: "MADARA",
+      hint: "Ninja lendário que planeja o Tsukuyomi Infinito",
       difficulty: "Médio",
     },
     {
-      word: atob("Q09ERSBHRUFTUw==").trim(),
-      hint: "Revolução contra império com mechas",
+      word: "GAROU",
+      hint: "Discípulo de Bang que se torna um monstro",
       difficulty: "Médio",
     },
     {
-      word: atob("U1dPUkQgQVJUIE9OTElORQ==").trim(),
-      hint: "Jogadores presos em um jogo de realidade virtual",
+      word: "BAKUGOU",
+      hint: "Estudante explosivo de UA que rivaliza com Deku",
       difficulty: "Médio",
     },
     {
-      word: atob("SEVMTFNJTkc=").trim(),
-      hint: "Organização que caça vampiros e outros monstros",
+      word: "NEZUKO",
+      hint: "Irmã de Tanjiro que se torna um demônio",
       difficulty: "Médio",
     },
     {
-      word: atob("Tk9SQUdBTUk=").trim(),
-      hint: "Deus da calamidade e uma garota sem lar",
-      difficulty: "Médio",
-    },
-
-    // Difícil
-    {
-      word: atob("U1RFSVlOUyBHQVRF").trim(),
-      hint: "Cientista maluco que viaja no tempo com micro-ondas",
-      difficulty: "Difícil",
-    },
-    {
-      word: atob("TU9OT0dBVEFSSQ==").trim(),
-      hint: "Série de anime com espíritos sobrenaturais e uma protagonista loira",
-      difficulty: "Difícil",
-    },
-    {
-      word: atob("UEFSQVNZVEU=").trim(),
-      hint: "Alienígenas que se hospedam em humanos e comem suas cabeças",
-      difficulty: "Difícil",
-    },
-    {
-      word: atob("SlVKVVRTVSBLQUlTRU4=").trim(),
-      hint: "Anime sobre exorcistas que lutam contra maldições",
-      difficulty: "Difícil",
-    },
-    {
-      word: atob("RUxBSU5F").trim(),
-      hint: "Anime sobre uma garota afetada por experiências e seus múltiplos corpos",
-      difficulty: "Difícil",
-    },
-    {
-      word: atob("QUtJUkE=").trim(),
-      hint: "Filme de anime cyberpunk sobre uma explosão em Neo-Tóquio",
-      difficulty: "Difícil",
-    },
-    {
-      word: atob("QkVSU0VSSw==").trim(),
-      hint: "Manga sombrio sobre um guerreiro com uma espada gigante",
-      difficulty: "Difícil",
-    },
-    {
-      word: atob("UFNZQy1IT1BBCFM=").trim(),
-      hint: "Detetive com sistema para medir criminalidade",
-      difficulty: "Difícil",
-    },
-  ];
-
-  // Novas perguntas do arquivo JSON
-  const newQuestions: GameQuestion[] = [
-    // Fácil
-    {
-      word: "GHIBLI",
-      hint: "Estúdio famoso por filmes como A Viagem de Chihiro",
-      difficulty: "Fácil",
-    },
-    {
-      word: "MAPPA",
-      hint: "Estúdio que animou Attack on Titan: The Final Season",
-      difficulty: "Fácil",
-    },
-    {
-      word: "TOEI",
-      hint: "Estúdio responsável por Dragon Ball e One Piece",
-      difficulty: "Fácil",
-    },
-    {
-      word: "CRUNCHYROLL",
-      hint: "Plataforma de streaming de animes",
-      difficulty: "Fácil",
-    },
-    {
-      word: "OTAKU",
-      hint: "Termo usado para fãs de anime e mangá",
-      difficulty: "Fácil",
-    },
-    {
-      word: "MANGAKA",
-      hint: "Pessoa que desenha e escreve mangás",
-      difficulty: "Fácil",
-    },
-    {
-      word: "WAIFU",
-      hint: "Personagem feminina pela qual se tem afeição",
-      difficulty: "Fácil",
-    },
-    {
-      word: "SHONEN",
-      hint: "Demografia de anime/mangá voltada para garotos adolescentes",
-      difficulty: "Fácil",
-    },
-    {
-      word: "ISEKAI",
-      hint: "Gênero de anime onde personagem vai para outro mundo",
-      difficulty: "Fácil",
-    },
-    {
-      word: "SAKURA",
-      hint: "Flor de cerejeira, comum em cenas de anime",
-      difficulty: "Fácil",
-    },
-
-    // Médio
-    {
-      word: "MADHOUSE",
-      hint: "Estúdio que produziu Death Note e Hunter x Hunter",
+      word: "ERWIN",
+      hint: "Comandante da Divisão de Reconhecimento",
       difficulty: "Médio",
     },
     {
-      word: "KYOTO ANIMATION",
-      hint: "Estúdio famoso por suas animações fluidas e belas",
+      word: "SANJI",
+      hint: "Cozinheiro dos Chapéus de Palha que não luta contra mulheres",
       difficulty: "Médio",
     },
     {
-      word: "UFOTABLE",
-      hint: "Estúdio conhecido por efeitos visuais incríveis em Demon Slayer",
-      difficulty: "Médio",
-    },
-    {
-      word: "SHOJO",
-      hint: "Demografia de anime/mangá voltada para garotas adolescentes",
-      difficulty: "Médio",
-    },
-    {
-      word: "SEINEN",
-      hint: "Demografia de anime/mangá voltada para homens adultos",
-      difficulty: "Médio",
-    },
-    {
-      word: "JOSEI",
-      hint: "Demografia de anime/mangá voltada para mulheres adultas",
-      difficulty: "Médio",
-    },
-    {
-      word: "MECHA",
-      hint: "Gênero de anime com robôs gigantes",
-      difficulty: "Médio",
-    },
-    {
-      word: "TSUNDERE",
-      hint: "Arquétipo de personagem inicialmente hostil que se torna afetuoso",
-      difficulty: "Médio",
-    },
-    {
-      word: "ISEKAI",
-      hint: "Gênero de anime onde o protagonista vai para outro mundo",
-      difficulty: "Médio",
-    },
-    {
-      word: "SLICE OF LIFE",
-      hint: "Gênero que retrata a vida cotidiana dos personagens",
+      word: "ALLMIGHT",
+      hint: "Herói número um que passa seu poder para Deku",
       difficulty: "Médio",
     },
 
     // Difícil
     {
-      word: "GAINAX",
-      hint: "Estúdio que criou Neon Genesis Evangelion",
+      word: "ITACHI",
+      hint: "Ninja que massacrou seu clã para proteger a vila",
       difficulty: "Difícil",
     },
     {
-      word: "PRODUCTION IG",
-      hint: "Estúdio que produziu Ghost in the Shell e Haikyuu",
+      word: "FRIEZA",
+      hint: "Imperador do universo que destruiu o planeta Vegeta",
       difficulty: "Difícil",
     },
     {
-      word: "BONES",
-      hint: "Estúdio responsável por Fullmetal Alchemist e My Hero Academia",
+      word: "RYUK",
+      hint: "Shinigami que deixa cair o Death Note na Terra",
       difficulty: "Difícil",
     },
     {
-      word: "YANDERE",
-      hint: "Arquétipo de personagem que é violento por amor",
+      word: "OBITO",
+      hint: "Ninja que se passa por Madara após a morte de Rin",
       difficulty: "Difícil",
     },
     {
-      word: "KUUDERE",
-      hint: "Arquétipo de personagem frio e sem emoções",
+      word: "BOROS",
+      hint: "Alienígena que busca um oponente digno de Saitama",
       difficulty: "Difícil",
     },
     {
-      word: "NAKAMA",
-      hint: "Palavra japonesa para amigos/companheiros, comum em animes",
+      word: "SHIGARAKI",
+      hint: "Vilão que busca destruir a sociedade dos heróis",
       difficulty: "Difícil",
     },
     {
-      word: "DOJINSHI",
-      hint: "Mangás feitos por fãs baseados em obras originais",
+      word: "MUICHIRO",
+      hint: "Pilar da Névoa que perdeu a memória",
       difficulty: "Difícil",
     },
     {
-      word: "SEIYUU",
-      hint: "Dublador de anime japonês",
+      word: "ZACKE",
+      hint: "Titã Bestial que lidera o ataque a Shiganshina",
       difficulty: "Difícil",
     },
     {
-      word: "SAKUGA",
-      hint: "Termo para sequências de animação excepcionalmente bem feitas",
+      word: "DOFLAMINGO",
+      hint: "Ex-nobre celestial que controla Dressrosa",
       difficulty: "Difícil",
     },
     {
-      word: "LIGHT NOVEL",
-      hint: "Formato de romance japonês que serve de base para muitos animes",
+      word: "ENDEAVOR",
+      hint: "Herói número dois que busca superar All Might",
       difficulty: "Difícil",
     },
   ];
-
-  // Combinar as perguntas originais com as novas
-  return [...originalQuestions, ...newQuestions] as GameQuestion[];
 };
 
 // Avatares disponíveis
@@ -335,7 +201,19 @@ export const avatars = [
 ];
 
 // Número máximo de erros permitidos
-export const MAX_ERRORS = 5;
+// Remover a constante MAX_ERRORS = 5 e substituir por uma função
+export const getMaxErrors = (difficulty: Difficulty): number => {
+  switch (difficulty) {
+    case "Fácil":
+      return 8;
+    case "Médio":
+      return 6;
+    case "Difícil":
+      return 4;
+    default:
+      return 6; // Médio como padrão
+  }
+};
 
 // Interface do contexto
 interface GameContextType {
@@ -375,6 +253,8 @@ interface GameContextType {
   applyTheme: () => void;
   getCurrentPlayerErrors: () => number;
   getRandomAvatar: () => string;
+  usedQuestions: string[];
+  setUsedQuestions: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 // Função para obter um avatar aleatório
@@ -390,10 +270,7 @@ const GameContext = createContext<GameContextType | undefined>(undefined);
 export function GameProvider({ children }: { children: React.ReactNode }) {
   // Inicializar as perguntas apenas quando o componente é montado
   const [questions] = useState(getGameQuestions);
-  // Adicionar estado para controlar perguntas já usadas
-  const [usedQuestions, setUsedQuestions] = useState<GameQuestion[]>([]);
-  // Adicionar estado para controlar se a nova rodada está sendo preparada
-  const [isPreparingNewRound, setIsPreparingNewRound] = useState(false);
+  const [usedQuestions, setUsedQuestions] = useState<string[]>([]);
 
   const [players, setPlayers] = useState<Player[]>([
     {
@@ -433,10 +310,10 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   const applyTheme = () => {
     const root = document.documentElement;
 
-    // Remove all theme classes
+    // Remover todas as classes de tema
     root.classList.remove("dark", "neon", "retro", "gartic");
 
-    // Apply the selected theme
+    // Aplicar o tema selecionado
     switch (visualTheme) {
       case "Modo Escuro":
         root.classList.add("dark");
@@ -448,58 +325,57 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         root.classList.add("retro");
         break;
       default:
-        // Default theme is gartic
+        // Tema padrão, adicionar gartic como padrão
         root.classList.add("gartic");
         break;
     }
   };
 
-  // Make sure the theme is applied when it changes
+  // Efeito para aplicar o tema quando ele mudar
   useEffect(() => {
     applyTheme();
   }, [visualTheme]);
 
-  // Also apply theme on initial load
-  useEffect(() => {
-    applyTheme();
-  }, []);
-
-  // Modificar para não repetir perguntas no mesmo jogo
+  // Obter uma pergunta aleatória com base na dificuldade
   const getRandomQuestion = (): GameQuestion => {
-    const filteredQuestions = questions.filter(
-      (q) =>
-        // Filtrar por dificuldade
-        q.difficulty === difficulty &&
-        // Filtrar perguntas já usadas
-        !usedQuestions.some((usedQ) => usedQ.word === q.word)
+    // Filtrar perguntas da dificuldade atual que ainda não foram usadas
+    let filteredQuestions = questions.filter(
+      (q) => q.difficulty === difficulty && !usedQuestions.includes(q.word)
     );
 
-    // Se não houver mais perguntas disponíveis, resetar usedQuestions e usar todas novamente
+    // Se todas as perguntas dessa dificuldade já foram usadas
     if (filteredQuestions.length === 0) {
-      setUsedQuestions([]);
-      const resetFilteredQuestions = questions.filter(
+      // Filtrar todas as perguntas da dificuldade atual
+      const allQuestionsOfDifficulty = questions.filter(
         (q) => q.difficulty === difficulty
-      ) as GameQuestion[];
-      const randomIndex = Math.floor(
-        Math.random() * resetFilteredQuestions.length
       );
-      const question = resetFilteredQuestions[randomIndex];
 
-      // Adicionar a pergunta escolhida à lista de usadas
-      setUsedQuestions([question]);
+      // Se houver apenas uma pergunta dessa dificuldade, retornar ela
+      if (allQuestionsOfDifficulty.length === 1) {
+        return allQuestionsOfDifficulty[0];
+      }
 
-      return {
-        ...question,
-        word: question.word.trim(),
-      };
+      // Remover a última pergunta usada para evitar repetição imediata
+      const lastUsedQuestion = usedQuestions[usedQuestions.length - 1];
+      filteredQuestions = allQuestionsOfDifficulty.filter(
+        (q) => q.word !== lastUsedQuestion
+      );
+
+      // Se ainda não houver perguntas disponíveis, resetar completamente
+      if (filteredQuestions.length === 0) {
+        setUsedQuestions([]);
+        filteredQuestions = allQuestionsOfDifficulty;
+      }
     }
 
+    // Selecionar uma pergunta aleatória
     const randomIndex = Math.floor(Math.random() * filteredQuestions.length);
     const question = filteredQuestions[randomIndex];
 
-    // Adicionar a pergunta escolhida à lista de usadas
-    setUsedQuestions((prev) => [...prev, question]);
+    // Adicionar a palavra à lista de perguntas usadas
+    setUsedQuestions((prev) => [...prev, question.word]);
 
+    // Limpar a palavra para remover possíveis caracteres de nova linha
     return {
       ...question,
       word: question.word.trim(),
@@ -508,7 +384,15 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
 
   // Obter o número de erros do jogador atual
   const getCurrentPlayerErrors = () => {
-    return players[currentPlayerIndex].errors;
+    // Verificar se o índice é válido e se o jogador existe
+    if (
+      currentPlayerIndex >= 0 &&
+      currentPlayerIndex < players.length &&
+      players[currentPlayerIndex]
+    ) {
+      return players[currentPlayerIndex].errors;
+    }
+    return 0; // Retornar 0 como valor padrão se o jogador não existir
   };
 
   // Verificar se o jogador ganhou
@@ -523,7 +407,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       );
   };
 
-  // Modificar makeGuess para verificar se o jogador atingiu a pontuação para vitória
+  // Modificar a função makeGuess para retirar apenas 1 ponto ao errar uma letra
   const makeGuess = (letter: string) => {
     if (guessedLetters.includes(letter) || wrongLetters.includes(letter)) {
       return;
@@ -541,8 +425,8 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
 
       // Verificar se o jogador atingiu a pontuação para vitória
       if (updatedPlayers[currentPlayerIndex].score >= pointsToWin) {
-        setGameOver(true);
         setPlayers(updatedPlayers);
+        setGameOver(true);
         return;
       }
 
@@ -560,8 +444,8 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
 
         // Verificar novamente se o jogador atingiu a pontuação para vitória após o bônus
         if (updatedPlayers[currentPlayerIndex].score >= pointsToWin) {
-          setGameOver(true);
           setPlayers(updatedPlayers);
+          setGameOver(true);
           return;
         }
 
@@ -576,19 +460,21 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     } else {
       setWrongLetters([...wrongLetters, letter]);
 
-      // Subtrair pontos por erro
+      // Subtrair pontos por erro - ALTERADO PARA -1 PONTO
       const updatedPlayers = [...players];
       updatedPlayers[currentPlayerIndex].score = Math.max(
         0,
-        updatedPlayers[currentPlayerIndex].score - 5
+        updatedPlayers[currentPlayerIndex].score - 1
       );
 
       // Incrementar o contador de erros do jogador atual
       updatedPlayers[currentPlayerIndex].errors += 1;
       setPlayers(updatedPlayers);
 
-      // Verificar se o jogador atingiu o número máximo de erros
-      if (updatedPlayers[currentPlayerIndex].errors >= MAX_ERRORS) {
+      // Verificar se o jogador atingiu o número máximo de erros baseado na dificuldade
+      const maxErrors =
+        difficulty === "Fácil" ? 8 : difficulty === "Médio" ? 6 : 4;
+      if (updatedPlayers[currentPlayerIndex].errors >= maxErrors) {
         setGameOver(true);
         return;
       }
@@ -600,7 +486,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  // Modificar guessWord para verificar se o jogador atingiu a pontuação para vitória
+  // Modificar a função guessWord para não encerrar o jogo ao errar, apenas retirar 50 pontos e passar para o próximo jogador
   const guessWord = (word: string) => {
     if (currentQuestion && word.toUpperCase() === currentQuestion.word) {
       // Acertou a palavra completa
@@ -609,8 +495,8 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
 
       // Verificar se o jogador atingiu a pontuação para vitória
       if (updatedPlayers[currentPlayerIndex].score >= pointsToWin) {
-        setGameOver(true);
         setPlayers(updatedPlayers);
+        setGameOver(true);
         return;
       }
 
@@ -630,8 +516,10 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       updatedPlayers[currentPlayerIndex].errors += 1;
       setPlayers(updatedPlayers);
 
-      // Verificar se o jogador atingiu o número máximo de erros
-      if (updatedPlayers[currentPlayerIndex].errors >= MAX_ERRORS) {
+      // Verificar se o jogador atingiu o número máximo de erros baseado na dificuldade
+      const maxErrors =
+        difficulty === "Fácil" ? 8 : difficulty === "Médio" ? 6 : 4;
+      if (updatedPlayers[currentPlayerIndex].errors >= maxErrors) {
         setGameOver(true);
         return;
       }
@@ -641,32 +529,40 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  // Modificar função para iniciar nova rodada
-  const startNewRound = () => {
-    // Marcar que estamos preparando uma nova rodada
-    setIsPreparingNewRound(true);
+  // Atualizar a função resetGame para considerar a dificuldade
+  const resetGame = () => {
+    setCurrentQuestion(getRandomQuestion());
+    setGuessedLetters([]);
+    setWrongLetters([]);
+    setTimeLeft(60);
+    setGameOver(false);
+    setUsedQuestions([]); // Limpar perguntas usadas ao reiniciar
 
-    // Primeiro fechamos o modal
+    // Resetar apenas os erros, mantendo os pontos
+    setPlayers(players.map((player) => ({ ...player, errors: 0 })));
+  };
+
+  // Modificar a função startNewRound para verificar vitória por pontuação após cada rodada
+  const startNewRound = () => {
+    // Verificar se algum jogador atingiu a pontuação para vitória
+    const winner = players.find((player) => player.score >= pointsToWin);
+    if (winner) {
+      setGameOver(true);
+      return;
+    }
+
+    setCurrentQuestion(getRandomQuestion());
+    setGuessedLetters([]);
+    setWrongLetters([]);
+    setTimeLeft(60);
     setShowSuccessModal(false);
 
-    // Usamos um setTimeout com delay maior para garantir que
-    // o modal seja completamente fechado antes de atualizar a questão
-    setTimeout(() => {
-      setCurrentQuestion(getRandomQuestion());
-      setGuessedLetters([]);
-      setWrongLetters([]);
-      setTimeLeft(60);
-
-      // Resetar os erros de todos os jogadores para a nova rodada
-      const updatedPlayers = [...players];
-      updatedPlayers.forEach((player) => {
-        player.errors = 0;
-      });
-      setPlayers(updatedPlayers);
-
-      // Desmarcar que terminamos de preparar a nova rodada
-      setIsPreparingNewRound(false);
-    }, 300); // Aumentar para 300ms para garantir que o modal esteja completamente fechado
+    // Resetar os erros de todos os jogadores para a nova rodada
+    const updatedPlayers = [...players];
+    updatedPlayers.forEach((player) => {
+      player.errors = 0;
+    });
+    setPlayers(updatedPlayers);
   };
 
   // Passar para o próximo jogador
@@ -681,19 +577,6 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     // Passar para o próximo jogador
     setCurrentPlayerIndex((currentPlayerIndex + 1) % players.length);
     setTimeLeft(60);
-  };
-
-  // Resetar o jogo
-  const resetGame = () => {
-    setCurrentQuestion(getRandomQuestion());
-    setGuessedLetters([]);
-    setWrongLetters([]);
-    setTimeLeft(60);
-    setGameOver(false);
-    setUsedQuestions([]); // Limpar perguntas usadas quando o jogo reiniciar
-
-    // Resetar pontuações e erros
-    setPlayers(players.map((player) => ({ ...player, score: 0, errors: 0 })));
   };
 
   // Efeito para inicializar o jogo
@@ -766,6 +649,8 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     applyTheme,
     getCurrentPlayerErrors,
     getRandomAvatar,
+    usedQuestions,
+    setUsedQuestions,
   };
 
   return <GameContext.Provider value={value}>{children}</GameContext.Provider>;

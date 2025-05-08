@@ -1,100 +1,102 @@
-"use client";
+"use client"
 
-import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { useGame, type Player } from "@/context/game-context";
-import confetti from "canvas-confetti";
-import { useEffect } from "react";
+import Image from "next/image"
+import { Button } from "@/components/ui/button"
+import { Dialog, DialogContent } from "@/components/ui/dialog"
+import { useGame } from "@/context/game-context"
+import confetti from "canvas-confetti"
+import { useEffect } from "react"
 
 interface VictoryModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  onRestart: () => void;
-  onBackToConfig: () => void;
-  winner: Player | undefined;
+  isOpen: boolean
+  onClose: () => void
+  onRestart: () => void
+  onBackToConfig: () => void
+  winner: {
+    name: string
+    avatar: string
+    score: number
+  } | null
 }
 
-export default function VictoryModal({
-  isOpen,
-  onClose,
-  onRestart,
-  onBackToConfig,
-  winner,
-}: VictoryModalProps) {
-  const { pointsToWin } = useGame();
+export default function VictoryModal({ isOpen, onClose, onRestart, onBackToConfig, winner }: VictoryModalProps) {
+  const { pointsToWin } = useGame()
 
-  // Efeito para lançar confetti quando o modal abrir
+  // Efeito para lançar confetes quando o modal abrir
   useEffect(() => {
     if (isOpen && winner) {
-      // Lançar confetti em cores festivas
-      confetti({
-        particleCount: 100,
-        spread: 70,
-        origin: { y: 0.6 },
-      });
+      // Lançar confetes
+      const duration = 3 * 1000
+      const animationEnd = Date.now() + duration
+      const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 }
 
-      // Lançar mais confetti após um pequeno atraso
-      setTimeout(() => {
+      function randomInRange(min: number, max: number) {
+        return Math.random() * (max - min) + min
+      }
+
+      const interval: any = setInterval(() => {
+        const timeLeft = animationEnd - Date.now()
+
+        if (timeLeft <= 0) {
+          return clearInterval(interval)
+        }
+
+        const particleCount = 50 * (timeLeft / duration)
+
+        // Lançar confetes de ambos os lados
         confetti({
-          particleCount: 50,
-          angle: 60,
-          spread: 55,
-          origin: { x: 0 },
-        });
+          ...defaults,
+          particleCount,
+          origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
+        })
         confetti({
-          particleCount: 50,
-          angle: 120,
-          spread: 55,
-          origin: { x: 1 },
-        });
-      }, 750);
+          ...defaults,
+          particleCount,
+          origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
+        })
+      }, 250)
     }
-  }, [isOpen, winner]);
+  }, [isOpen, winner])
 
-  if (!winner) return null;
+  if (!winner) return null
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="gartic-modal">
-        <div className="p-6 text-center">
-          <div className="text-4xl font-bold text-yellow-400 mb-6 victory-title">
-            VITÓRIA!
+      <DialogContent className="sm:max-w-md max-h-[90vh] overflow-y-auto">
+        <div className="flex flex-col items-center gap-4 py-2">
+          <h2 className="text-center text-2xl font-bold text-yellow-500">PARABÉNS! TEMOS UM VENCEDOR!</h2>
+
+          <div className="relative w-32 h-32 mx-auto">
+            <Image
+              src={winner.avatar || "/placeholder.svg"}
+              alt="Vencedor"
+              fill
+              className="object-contain rounded-full border-4 border-yellow-500"
+            />
+            <div className="absolute -top-4 -right-4 text-4xl">👑</div>
           </div>
 
-          <div className="mb-6">
-            <div className="text-center mb-4">
-              <div className="inline-block relative">
-                <Image
-                  src={winner.avatar || "/placeholder.svg"}
-                  alt={`Avatar de ${winner.name}`}
-                  width={120}
-                  height={120}
-                  className="rounded-full border-4 border-yellow-400"
-                />
-                <div className="absolute -top-4 -right-4 text-4xl">👑</div>
-              </div>
-            </div>
-            <h2 className="text-2xl font-bold mb-2">{winner.name}</h2>
-            <p className="text-green-400 font-bold text-xl">
-              Pontuação: {winner.score} / {pointsToWin}
+          <div className="bg-yellow-50 p-4 rounded-lg w-full text-center">
+            <p className="text-lg mb-2 text-gray-800">O grande vencedor é:</p>
+            <p className="text-3xl font-bold text-yellow-600">{winner.name}</p>
+            <p className="text-xl font-semibold mt-2 text-gray-800">
+              Pontuação: <span className="text-green-600">{winner.score}</span> / {pointsToWin}
             </p>
           </div>
 
-          <p className="mb-6 text-lg">
-            Parabéns! Você venceu o desafio de palavras.
-          </p>
+          <p className="text-center text-lg">Parabéns por dominar o conhecimento em programação e vencer o desafio!</p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button onClick={onRestart} className="gartic-button">
+          <div className="flex gap-3 w-full mt-2">
+            <Button onClick={onRestart} className="bg-green-500 hover:bg-green-600 text-white flex-1">
               Jogar Novamente
             </Button>
-            <Button onClick={onBackToConfig} className="gartic-button-outline">
-              Voltar às Configurações
+
+            <Button onClick={onBackToConfig} variant="outline" className="flex-1">
+              Voltar para Configurações
             </Button>
           </div>
         </div>
       </DialogContent>
     </Dialog>
-  );
+  )
 }

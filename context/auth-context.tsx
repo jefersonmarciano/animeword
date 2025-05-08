@@ -1,132 +1,119 @@
-"use client";
+"use client"
 
-import { createContext, useState, useContext, useEffect } from "react";
+import { createContext, useContext, useState, useEffect, type ReactNode } from "react"
+import { generateRandomString } from "@/lib/utils"
 
 interface AuthContextType {
-  user: { id: string; nickname: string } | null;
-  loading: boolean;
-  loginError: string | null;
-  simpleLogin: (nickname: string) => void;
-  logout: () => void;
+  user: User | null
+  setUser: (user: User | null) => void
+  isAuthenticated: boolean
+  login: (nickname: string) => void
+  loginAsGuest: () => void
+  logout: () => void
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
-
-// Verificar se o nickname já está em uso (simula verificação)
-const USED_NICKNAMES: string[] = [];
-
-// Função para gerar um ID de usuário único no formato UUID válido
-function generateUserId() {
-  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
-    const r = (Math.random() * 16) | 0,
-      v = c === "x" ? r : (r & 0x3) | 0x8;
-    return v.toString(16);
-  });
+export interface User {
+  id: string
+  nickname: string
+  isGuest: boolean
+  avatar: string
 }
 
-export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<{ id: string; nickname: string } | null>(
-    null
-  );
-  const [loading, setLoading] = useState(false);
-  const [loginError, setLoginError] = useState<string | null>(null);
+const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
-  // Tentar recuperar o usuário do localStorage ao iniciar
+export function AuthProvider({ children }: { children: ReactNode }) {
+  const [user, setUser] = useState<User | null>(null)
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+
+  // Check for saved user on mount
   useEffect(() => {
-    try {
-      const savedNickname = localStorage.getItem("animeword-nickname");
-      const savedUserId = localStorage.getItem("animeword-userid");
-      if (savedNickname && savedUserId) {
-        console.log("Usuário recuperado do localStorage:", {
-          id: savedUserId,
-          nickname: savedNickname,
-        });
-        setUser({ id: savedUserId, nickname: savedNickname });
-      }
-    } catch (e) {
-      // Ignorar erros de localStorage
-      console.error("Erro ao recuperar usuário do localStorage:", e);
-    }
-  }, []);
-
-  // Login simples apenas com nickname
-  const simpleLogin = (nickname: string) => {
-    if (!nickname.trim()) {
-      setLoginError("Digite um apelido para continuar.");
-      return;
-    }
-
-    setLoading(true);
-    setLoginError(null);
-
-    // Verificar se o nickname já está em uso (simples)
-    if (USED_NICKNAMES.includes(nickname)) {
-      setLoginError("Este apelido já está em uso. Escolha outro.");
-      setLoading(false);
-      return;
-    }
-
-    try {
-      // Gerar um ID único para o usuário
-      const userId = generateUserId();
-      console.log("Novo usuário criado:", { id: userId, nickname });
-
-      // "Autenticar" o usuário
-      setUser({ id: userId, nickname });
-      USED_NICKNAMES.push(nickname);
-
-      // Armazenar no localStorage para persistência básica
+    const savedUser = localStorage.getItem("devword_user")
+    if (savedUser) {
       try {
-        localStorage.setItem("animeword-nickname", nickname);
-        localStorage.setItem("animeword-userid", userId);
-      } catch (e) {
-        // Ignorar erros de localStorage
-        console.error("Erro ao salvar usuário no localStorage:", e);
+        const parsedUser = JSON.parse(savedUser)
+        setUser(parsedUser)
+        setIsAuthenticated(true)
+      } catch (error) {
+        console.error("Failed to parse saved user", error)
+        localStorage.removeItem("devword_user")
       }
-    } catch (error: any) {
-      console.error("Erro no login:", error);
-      setLoginError("Falha ao entrar no jogo. Tente novamente.");
-    } finally {
-      setLoading(false);
     }
-  };
+  }, [])
+
+  // Update localStorage when user changes
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem("devword_user", JSON.stringify(user))
+      setIsAuthenticated(true)
+    } else {
+      localStorage.removeItem("devword_user")
+      setIsAuthenticated(false)
+    }
+  }, [user])
+
+  const login = (nickname: string) => {
+    // Generate a random avatar from the available avatars
+    const avatars = [
+      "/images/avatars/devFront.png",
+      "/images/avatars/devJs.png",
+      "/images/avatars/devRust.png",
+      "/images/avatars/analistadeRedes.png",
+      "/images/avatars/analistadeDados.png",
+      "/images/avatars/nerdola.png",
+      "/images/avatars/irritado.png",
+      "/images/avatars/dracula.png",
+      "/images/avatars/homemTranquilo.png",
+    ]
+    const randomAvatar = avatars[Math.floor(Math.random() * avatars.length)]
+
+    const newUser: User = {
+      id: generateRandomString(8),
+      nickname: nickname || `Jogador_${generateRandomString(4)}`,
+      isGuest: false,
+      avatar: randomAvatar,
+    }
+    setUser(newUser)
+  }
+
+  const loginAsGuest = () => {
+    // Generate a random avatar from the available avatars
+    const avatars = [
+      "/images/avatars/devFront.png",
+      "/images/avatars/devJs.png",
+      "/images/avatars/devRust.png",
+      "/images/avatars/analistadeRedes.png",
+      "/images/avatars/analistadeDados.png",
+      "/images/avatars/nerdola.png",
+      "/images/avatars/irritado.png",
+      "/images/avatars/dracula.png",
+      "/images/avatars/homemTranquilo.png",
+    ]
+    const randomAvatar = avatars[Math.floor(Math.random() * avatars.length)]
+
+    const guestUser: User = {
+      id: generateRandomString(8),
+      nickname: `Convidado_${generateRandomString(4)}`,
+      isGuest: true,
+      avatar: randomAvatar,
+    }
+    setUser(guestUser)
+  }
 
   const logout = () => {
-    try {
-      // Remover o nickname da lista de usados
-      const index = USED_NICKNAMES.indexOf(user?.nickname || "");
-      if (index > -1) {
-        USED_NICKNAMES.splice(index, 1);
-      }
-
-      // Limpar o usuário
-      setUser(null);
-
-      // Limpar localStorage
-      try {
-        localStorage.removeItem("animeword-nickname");
-        localStorage.removeItem("animeword-userid");
-      } catch (e) {
-        // Ignorar erros de localStorage
-      }
-    } catch (error) {
-      console.error("Erro no logout:", error);
-    }
-  };
+    setUser(null)
+  }
 
   return (
-    <AuthContext.Provider
-      value={{ user, loading, loginError, simpleLogin, logout }}
-    >
+    <AuthContext.Provider value={{ user, setUser, isAuthenticated, login, loginAsGuest, logout }}>
       {children}
     </AuthContext.Provider>
-  );
+  )
 }
 
 export function useAuth() {
-  const context = useContext(AuthContext);
+  const context = useContext(AuthContext)
   if (context === undefined) {
-    throw new Error("useAuth deve ser usado dentro de um AuthProvider");
+    throw new Error("useAuth must be used within an AuthProvider")
   }
-  return context;
+  return context
 }

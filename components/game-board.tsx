@@ -2,7 +2,7 @@
 
 import type React from "react";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,6 +11,8 @@ import { ArrowLeft, Volume2, VolumeX } from "lucide-react";
 import PlayerCard from "@/components/player-card";
 import Keyboard from "@/components/keyboard";
 import GameRules from "./game-rules";
+import CountdownTimer from "./countdown-timer";
+import { useSound } from "@/hooks/use-sound";
 
 // Importar os modais
 import SuccessModal from "@/components/success-modal";
@@ -43,16 +45,21 @@ export default function GameBoard({
     pointsToWin,
   } = useGame();
 
+  const { isMuted, toggleMute, playSound } = useSound();
   const [wordGuess, setWordGuess] = useState("");
   const [showGameOverModal, setShowGameOverModal] = useState(false);
   const [showVictoryModal, setShowVictoryModal] = useState(false);
+  const [winner, setWinner] = useState<{
+    name: string;
+    avatar: string;
+    score: number;
+  } | null>(null);
   const [correctLetters, setCorrectLetters] = useState<string[]>([]);
   const [remainingTime, setRemainingTime] = useState(timeLeft);
-  const [soundEnabled, setSoundEnabled] = useState(true);
-  const [currentCorrectWord, setCurrentCorrectWord] = useState<{
-    word: string;
-    hint: string;
-  } | null>(null);
+  const [showCountdown, setShowCountdown] = useState(false);
+  const [feedbackLetter, setFeedbackLetter] = useState<string | null>(null);
+  const [errorFeedback, setErrorFeedback] = useState(false);
+  const gameAreaRef = useRef<HTMLDivElement>(null);
 
   // Atualizar o tempo restante quando timeLeft mudar
   useEffect(() => {
@@ -68,6 +75,29 @@ export default function GameBoard({
       setCorrectLetters(correct);
     }
   }, [currentQuestion, guessedLetters]);
+
+  // Verificar se algum jogador atingiu a pontuação para vitória
+  useEffect(() => {
+    if (gameOver) {
+      // Verificar se algum jogador atingiu a pontuação para vitória
+      const victoriousPlayer = players.find(
+        (player) => player.score >= pointsToWin
+      );
+      if (victoriousPlayer) {
+        setWinner({
+          name: victoriousPlayer.name,
+          avatar: victoriousPlayer.avatar,
+          score: victoriousPlayer.score,
+        });
+        setShowVictoryModal(true);
+        setShowGameOverModal(false); // Garantir que o modal de game over não apareça
+      } else {
+        setShowGameOverModal(true);
+        setShowVictoryModal(false); // Garantir que o modal de vitória não apareça
+        playSound("defeat");
+      }
+    }
+  }, [gameOver, players, pointsToWin, playSound]);
 
   // Remover a palavra atual do console para evitar trapaças
   useEffect(() => {
@@ -91,52 +121,54 @@ export default function GameBoard({
     };
   }, [currentQuestion]);
 
-  // Atualizar para mostrar o modal de game over ou vitória quando o jogo acabar
+  // Mostrar o contador regressivo ao iniciar o jogo
   useEffect(() => {
-    if (gameOver) {
-      // Verificar se algum jogador atingiu a pontuação para vitória
-      const winner = players.find((player) => player.score >= pointsToWin);
-      if (winner) {
-        setShowVictoryModal(true);
-      } else {
-        setShowGameOverModal(true);
-      }
-    }
-  }, [gameOver, players, pointsToWin]);
+    setShowCountdown(true);
+    const timer = setTimeout(() => {
+      setShowCountdown(false);
+    }, 5000); // 5 segundos para o contador
 
-  // Quando o modal de sucesso é aberto, vamos armazenar a palavra atual
-  useEffect(() => {
-    if (showSuccessModal && currentQuestion) {
-      setCurrentCorrectWord({
-        word: currentQuestion.word,
-        hint: currentQuestion.hint,
-      });
-    }
-  }, [showSuccessModal, currentQuestion]);
+    return () => clearTimeout(timer);
+  }, []);
 
   // Renderizar os espaços para as letras da palavra
   const renderWordSpaces = () => {
     if (!currentQuestion) return null;
 
-    return (
-      <div className="flex flex-wrap justify-center my-6 gap-1">
-        {currentQuestion.word.split("").map((letter, index) => {
-          // If it's a space, render a space instead of a letter box
-          if (letter === " ") {
-            return <div key={index} className="w-8 h-8" />;
-          }
+    // Contar o número de palavras
+    const wordCount = currentQuestion.word.split(" ").length;
+    const wordCountText =
+      wordCount > 1 ? `${wordCount} palavras` : "uma palavra";
 
-          // Otherwise render the letter box
-          return (
-            <div key={index} className="letter-box">
-              {guessedLetters.includes(letter) ? (
-                <span className="letter-reveal">{letter}</span>
-              ) : (
-                ""
-              )}
-            </div>
-          );
-        })}
+    return (
+      <div className="flex flex-col items-center">
+        <div className="flex flex-wrap justify-center md:my-6 gap-1">
+          {currentQuestion.word.split("").map((letter, index) => {
+            // If it's a space, render a space instead of a letter box
+            if (letter === " ") {
+              return (
+                <div key={index} className="w-6 h-6 md:w-8 md:h-8 rounded-md" />
+              );
+            }
+
+            // Otherwise render the letter box
+            return (
+              <div
+                key={index}
+                className={`letter-box rounded-md ${
+                  letter === feedbackLetter ? "correct-feedback" : ""
+                }`}
+              >
+                {guessedLetters.includes(letter) ? (
+                  <span className="letter-reveal">{letter}</span>
+                ) : (
+                  ""
+                )}
+              </div>
+            );
+          })}
+        </div>
+        <p className="text-sm text-gray-400 mt-2">{wordCountText}</p>
       </div>
     );
   };
@@ -145,9 +177,35 @@ export default function GameBoard({
   const handleWordGuess = (e: React.FormEvent) => {
     e.preventDefault();
     if (wordGuess.trim()) {
+      const isCorrect =
+        currentQuestion && wordGuess.toUpperCase() === currentQuestion.word;
+
+      if (isCorrect) {
+        playSound("success");
+      } else {
+        playSound("error");
+        setErrorFeedback(true);
+        setTimeout(() => setErrorFeedback(false), 500);
+      }
+
       guessWord(wordGuess.toUpperCase());
       setWordGuess("");
     }
+  };
+
+  // Função para lidar com o clique no teclado
+  const handleKeyPress = (key: string) => {
+    const isCorrect = currentQuestion && currentQuestion.word.includes(key);
+
+    if (isCorrect) {
+      playSound("success");
+      setFeedbackLetter(key);
+      setTimeout(() => setFeedbackLetter(null), 500);
+    } else {
+      playSound("error");
+    }
+
+    makeGuess(key);
   };
 
   // Renderizar a dica da palavra
@@ -155,8 +213,10 @@ export default function GameBoard({
     if (!currentQuestion) return null;
 
     return (
-      <div className="text-center my-4">
-        <p className="text-lg text-white">{currentQuestion.hint}</p>
+      <div className="text-center my-2 md:my-4">
+        <p className="text-base md:text-lg text-white">
+          {currentQuestion.hint}
+        </p>
       </div>
     );
   };
@@ -166,7 +226,7 @@ export default function GameBoard({
     const percentage = (remainingTime / 60) * 100;
 
     return (
-      <div className="w-full bg-[#7b2cbf] rounded-full h-2 mb-4">
+      <div className="w-full bg-card-highlight rounded-full h-2 mb-2 md:mb-4">
         <div className="timer-bar" style={{ width: `${percentage}%` }}></div>
       </div>
     );
@@ -174,89 +234,126 @@ export default function GameBoard({
 
   // Renderizar a imagem do personagem com base no número de erros
   const renderCharacterImage = () => {
+    // Obter o número de erros com segurança
     const errors = getCurrentPlayerErrors();
-    const imagePath = `/images/forca_${errors}.jpeg`;
+    // Obter o número máximo de erros baseado na dificuldade
+    const maxErrors =
+      difficulty === "Fácil" ? 8 : difficulty === "Médio" ? 6 : 4;
+    // Calcular o índice da imagem (0 a 5) baseado na proporção de erros
+    const imageIndex = Math.min(5, Math.floor((errors / maxErrors) * 5));
+    const imagePath = `/images/forca_${imageIndex}.jpeg`;
 
     return (
-      <div className="w-48 h-48 mb-4 mx-auto">
+      <div className="w-24 h-24 md:w-48 md:h-48 mb-2 md:mb-4 mx-auto">
         <Image
           src={imagePath || "/placeholder.svg"}
           alt={`Personagem - ${errors} erros`}
-          width={192}
-          height={192}
-          className="object-contain rounded-lg"
+          width={0}
+          height={0}
+          sizes="100vw"
+          style={{
+            borderRadius: "10px",
+          }}
+          className="w-full h-full object-contain rounded-lg"
         />
       </div>
     );
   };
 
-  // Função para reiniciar o jogo após game over
+  // Função para reiniciar o jogo após game over ou vitória
   const handleRestart = () => {
     setShowGameOverModal(false);
+    setShowVictoryModal(false);
+    setWinner(null);
     setGameOver(false);
-    resetGame();
+    startNewRound(); // Iniciar uma nova rodada ao invés de resetar o jogo
+    setShowCountdown(true);
+    setTimeout(() => setShowCountdown(false), 5000);
   };
 
-  // Função para voltar às configurações após game over
+  // Função para voltar às configurações após game over ou vitória
   const handleBackToConfig = () => {
     setShowGameOverModal(false);
+    setShowVictoryModal(false);
+    setWinner(null);
     setGameOver(false);
     onBackToConfig();
   };
 
-  // Função para reiniciar o jogo após vitória
-  const handleVictoryRestart = () => {
-    setShowVictoryModal(false);
-    setGameOver(false);
-    resetGame();
-  };
-
-  // Função para voltar às configurações após vitória
-  const handleVictoryBackToConfig = () => {
-    setShowVictoryModal(false);
-    setGameOver(false);
-    onBackToConfig();
-  };
-
-  // Função para trocar o avatar de um jogador
-  const handleChangeAvatar = (playerId: number, avatar: string) => {
-    // Esta função seria implementada no contexto do jogo
-    // Por enquanto, apenas um placeholder
-    console.log(`Trocar avatar do jogador ${playerId} para ${avatar}`);
+  // Renderizar os jogadores em uma linha no topo
+  const renderPlayersRow = () => {
+    return (
+      <div className="players-row">
+        {players.map((player, index) => (
+          <div
+            key={player.id}
+            className={`player-card-small bg-card shadow-md ${
+              index === currentPlayerIndex &&
+              currentPlayerIndex < players.length
+                ? "border-2 border-yellow-500 rounded-lg"
+                : "border border-border"
+            }`}
+            style={{ borderRadius: "10px" }}
+          >
+            <div className="relative w-12 h-12 mx-auto mb-1">
+              <Image
+                src={player.avatar || "/placeholder.svg"}
+                alt={player.name}
+                width={48}
+                height={48}
+                className="rounded-full object-cover"
+              />
+              {index === currentPlayerIndex &&
+                currentPlayerIndex < players.length && (
+                  <div className="crown-small">👑</div>
+                )}
+            </div>
+            <div className="text-xs font-medium truncate">{player.name}</div>
+            <div className="text-xs bg-primary/20 rounded-full px-2 py-0.5 mt-1 mx-auto w-fit">
+              {player.score}
+            </div>
+          </div>
+        ))}
+      </div>
+    );
   };
 
   return (
-    <>
-      <div className="game-layout">
-        {/* Modal de Sucesso - Agora usando currentCorrectWord que não muda */}
-        {currentCorrectWord && (
-          <SuccessModal
-            isOpen={showSuccessModal}
-            onClose={startNewRound}
-            word={currentCorrectWord.word}
-            hint={currentCorrectWord.hint}
-          />
-        )}
+    <div className="mobile-game-layout">
+      {/* Contador regressivo */}
+      {showCountdown && <CountdownTimer />}
 
-        {/* Modal de Game Over */}
-        <GameOverModal
-          isOpen={showGameOverModal}
-          onClose={() => setShowGameOverModal(false)}
-          onRestart={handleRestart}
-          onBackToConfig={handleBackToConfig}
+      {/* Modal de Sucesso */}
+      {currentQuestion && (
+        <SuccessModal
+          isOpen={showSuccessModal}
+          onClose={startNewRound}
+          word={currentQuestion.word}
+          hint={currentQuestion.hint}
         />
+      )}
 
-        {/* Modal de Vitória */}
-        <VictoryModal
-          isOpen={showVictoryModal}
-          onClose={() => setShowVictoryModal(false)}
-          onRestart={handleVictoryRestart}
-          onBackToConfig={handleVictoryBackToConfig}
-          winner={players.find((player) => player.score >= pointsToWin)}
-        />
+      {/* Modal de Game Over */}
+      <GameOverModal
+        isOpen={showGameOverModal}
+        onClose={() => setShowGameOverModal(false)}
+        onRestart={handleRestart}
+        onBackToConfig={handleBackToConfig}
+      />
 
+      {/* Modal de Vitória */}
+      <VictoryModal
+        isOpen={showVictoryModal}
+        onClose={() => setShowVictoryModal(false)}
+        onRestart={handleRestart}
+        onBackToConfig={handleBackToConfig}
+        winner={winner}
+      />
+
+      {/* Layout para desktop */}
+      <div className="hidden md:grid grid-cols-1 lg:grid-cols-4 gap-6">
         {/* Coluna da esquerda - Jogadores */}
-        <div className="game-column gartic-card p-5">
+        <div className="gartic-card p-5">
           <div className="flex justify-between items-center mb-4">
             <button
               onClick={onBackToConfig}
@@ -266,13 +363,14 @@ export default function GameBoard({
             </button>
 
             <button
-              onClick={() => setSoundEnabled(!soundEnabled)}
-              className="p-2 rounded-full bg-[#7b2cbf] hover:bg-[#9d4edd]"
+              onClick={toggleMute}
+              className="p-2 rounded-full bg-card-highlight hover:bg-muted"
+              aria-label={isMuted ? "Ativar som" : "Desativar som"}
             >
-              {soundEnabled ? (
-                <Volume2 className="w-5 h-5" />
-              ) : (
+              {isMuted ? (
                 <VolumeX className="w-5 h-5" />
+              ) : (
+                <Volume2 className="w-5 h-5" />
               )}
             </button>
           </div>
@@ -280,9 +378,9 @@ export default function GameBoard({
           {/* Timer */}
           {renderTimer()}
 
-          {/* Dificuldade - Movida para cima dos jogadores */}
+          {/* Dificuldade */}
           <div className="mb-4 flex items-center justify-between">
-            <span className="text-white">Dificuldade:</span>
+            <span>Dificuldade:</span>
             <select
               value={difficulty}
               onChange={(e) => setDifficulty(e.target.value as any)}
@@ -295,30 +393,31 @@ export default function GameBoard({
           </div>
 
           {/* Área dos jogadores */}
-          <div className="mobile-players">
+          <div className="space-y-3">
             {players.map((player, index) => (
               <div
                 key={player.id}
-                className={`player-card p-3 ${
+                className={`p-3 ${
                   index === currentPlayerIndex
-                    ? "gartic-card-highlight border-[#4cc9f0]"
+                    ? "gartic-card-highlight border-yellow-500"
                     : "gartic-card-highlight"
                 } rounded-lg`}
               >
                 <PlayerCard
                   player={player}
                   isCurrentPlayer={index === currentPlayerIndex}
-                  onChangeAvatar={handleChangeAvatar}
                 />
               </div>
             ))}
           </div>
         </div>
 
-        {/* Coluna do meio - Jogo (mais larga) */}
-        <div className="game-column gartic-card p-5">
+        {/* Coluna do meio - Jogo */}
+        <div className="gartic-card p-5 lg:col-span-2">
           {/* Palavra a ser adivinhada - Agora mostra apenas a dica */}
-          <div className="bg-[#7b2cbf] p-4 rounded-lg mb-6">{renderHint()}</div>
+          <div className="bg-card-highlight p-4 rounded-lg mb-6">
+            {renderHint()}
+          </div>
 
           {/* Área do jogo - Mostrar a imagem do personagem baseada nos erros */}
           <div className="flex flex-col items-center mb-6">
@@ -330,28 +429,18 @@ export default function GameBoard({
 
           {/* Teclado */}
           <Keyboard
-            onKeyPress={makeGuess}
+            onKeyPress={handleKeyPress}
             guessedLetters={guessedLetters}
             wrongLetters={wrongLetters}
             correctLetters={correctLetters}
           />
 
-          {/* Letras erradas */}
-          <div className="bg-[#7b2cbf]/50 p-4 rounded-lg mt-6">
-            <p className="text-center text-red-400 font-medium">
-              Caracteres errados:
-            </p>
-            <div className="flex flex-wrap justify-center gap-2 mt-2">
-              {wrongLetters.map((letter, index) => (
-                <span key={index} className="text-red-400 font-bold">
-                  {letter}
-                </span>
-              ))}
-            </div>
-          </div>
-
           {/* Formulário para adivinhar a palavra completa */}
-          <div className="mt-6 flex flex-col gap-2">
+          <div
+            className={`mt-6 flex flex-col gap-2 ${
+              errorFeedback ? "error-feedback" : ""
+            }`}
+          >
             <Input
               value={wordGuess}
               onChange={(e) => setWordGuess(e.target.value)}
@@ -369,10 +458,112 @@ export default function GameBoard({
         </div>
 
         {/* Coluna da direita - Regras */}
-        <div className="game-column">
+        <div className="hidden lg:block">
           <GameRules />
         </div>
       </div>
-    </>
+
+      {/* Layout otimizado para mobile */}
+      <div className="md:hidden flex flex-col h-[90vh]">
+        {/* Header fixo com jogadores e timer */}
+        <div className="mobile-header">
+          {/* Botão voltar e som */}
+          <div className="flex justify-between items-center px-2 py-1">
+            <button
+              onClick={onBackToConfig}
+              className="text-sm py-1 px-2 rounded-full bg-card-highlight"
+            >
+              <ArrowLeft className="w-4 h-4" />
+            </button>
+            <button
+              onClick={toggleMute}
+              className="p-1 rounded-full bg-card-highlight"
+              aria-label={isMuted ? "Ativar som" : "Desativar som"}
+            >
+              {isMuted ? (
+                <VolumeX className="w-4 h-4" />
+              ) : (
+                <Volume2 className="w-4 h-4" />
+              )}
+            </button>
+          </div>
+
+          {/* Timer */}
+          {renderTimer()}
+
+          {/* Jogadores em linha */}
+          {renderPlayersRow()}
+        </div>
+
+        {/* Conteúdo principal com scroll */}
+        <div
+          className="mobile-content rounded-xl"
+          style={{
+            overflowY: "auto",
+            height: "calc(100vh - 180px)",
+            paddingBottom: "110px",
+            WebkitOverflowScrolling: "touch",
+            scrollbarWidth: "thin",
+            scrollbarColor: "rgba(255, 255, 255, 0.3) transparent",
+          }}
+        >
+          {/* Dica da palavra */}
+          <div className="bg-card-highlight p-2 rounded-xl md:mb-3">
+            {renderHint()}
+          </div>
+
+          {/* Imagem do personagem */}
+          <div className="flex flex-col items-center md:mb-3">
+            {currentQuestion && renderCharacterImage()}
+
+            {/* Espaços para as letras */}
+            {renderWordSpaces()}
+          </div>
+
+          {/* Formulário para adivinhar a palavra completa */}
+          <div
+            className={`flex gap-2 mt-6 md:mt-0 md:mb-4 ${
+              errorFeedback ? "error-feedback" : ""
+            }`}
+          >
+            <Input
+              value={wordGuess}
+              onChange={(e) => setWordGuess(e.target.value)}
+              placeholder="Digite seu palpite"
+              className="gartic-input flex-1 rounded-xl"
+            />
+            <Button
+              type="submit"
+              onClick={handleWordGuess}
+              className="gartic-button whitespace-nowrap rounded-xl"
+            >
+              Chutar!
+            </Button>
+          </div>
+        </div>
+
+        {/* Footer fixo com teclado */}
+        <div
+          className="mobile-footer rounded-t-xl"
+          style={{
+            position: "fixed",
+            bottom: 0,
+            left: 0,
+            right: 0,
+            zIndex: 40,
+            backgroundColor: "hsl(var(--card))",
+            borderTop: "1px solid hsl(var(--border))",
+            padding: "0.5rem",
+          }}
+        >
+          <Keyboard
+            onKeyPress={handleKeyPress}
+            guessedLetters={guessedLetters}
+            wrongLetters={wrongLetters}
+            correctLetters={correctLetters}
+          />
+        </div>
+      </div>
+    </div>
   );
 }

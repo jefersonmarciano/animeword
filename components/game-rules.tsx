@@ -38,7 +38,7 @@ export default function GameRules() {
         <div className="gartic-rules-item">
           <div className="gartic-rules-number">4</div>
           <p className="gartic-rules-text">
-            Errar uma letra = <span className="text-red-400">-5 pontos</span>.
+            Errar uma letra = <span className="text-red-400">-1 pontos</span>.
           </p>
         </div>
 
@@ -56,11 +56,18 @@ export default function GameRules() {
             O primeiro jogador a atingir a pontuação para vitória vence o jogo.
           </p>
         </div>
+        <div className="gartic-rules-item">
+          <div className="gartic-rules-number">7</div>
+          <p className="gartic-rules-text">
+            Dependendo da dificuldade, você terá um número limitado de
+            tentativas (Fácil: 8, Médio: 6, Difícil: 4).
+          </p>
+        </div>
 
         <div className="mt-6 pt-4 border-t border-[#7b2cbf]">
           <div className="flex justify-center">
             <img
-              src="/images/puppo.png"
+              src="/images/logopalavra.png"
               alt="Mascote"
               className="w-32 h-32 object-contain"
             />

@@ -4,38 +4,39 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 217 100% 50%;
+    --foreground: 0 0% 100%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 217 80% 25%;
+    --card-foreground: 0 0% 100%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --card-highlight: 217 80% 30%;
+    --card-highlight-foreground: 0 0% 100%;
 
-    --primary: 221.2 83.2% 53.3%;
-    --primary-foreground: 210 40% 98%;
+    --popover: 217 80% 25%;
+    --popover-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --primary: 45 100% 50%;
+    --primary-foreground: 0 0% 0%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --secondary: 45 100% 96%;
+    --secondary-foreground: 217 80% 25%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --muted: 217 40% 35%;
+    --muted-foreground: 0 0% 90%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --accent: 45 100% 50%;
+    --accent-foreground: 0 0% 0%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 221.2 83.2% 53.3%;
+    --destructive: 0 100% 60%;
+    --destructive-foreground: 0 0% 100%;
 
-    --radius: 0.5rem;
+    --border: 217 60% 35%;
+    --input: 217 60% 35%;
+    --ring: 45 100% 50%;
   }
 
-  .dark {
+  html.dark {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
 
@@ -65,7 +66,7 @@
     --ring: 224.3 76.3% 48%;
   }
 
-  .neon {
+  html.neon {
     --background: 240 100% 8%;
     --foreground: 0 0% 98%;
 
@@ -75,16 +76,16 @@
     --popover: 240 100% 8%;
     --popover-foreground: 0 0% 98%;
 
-    --primary: 320 100% 60%;
-    --primary-foreground: 0 0% 98%;
+    --primary: 180 100% 50%;
+    --primary-foreground: 0 0% 0%;
 
-    --secondary: 180 100% 50%;
+    --secondary: 180 100% 20%;
     --secondary-foreground: 0 0% 98%;
 
     --muted: 240 50% 20%;
     --muted-foreground: 0 0% 70%;
 
-    --accent: 120 100% 50%;
+    --accent: 300 100% 50%;
     --accent-foreground: 0 0% 98%;
 
     --destructive: 0 100% 50%;
@@ -92,10 +93,10 @@
 
     --border: 240 50% 20%;
     --input: 240 50% 20%;
-    --ring: 320 100% 60%;
+    --ring: 180 100% 50%;
   }
 
-  .retro {
+  html.retro {
     --background: 39 70% 95%;
     --foreground: 20 40% 20%;
 
@@ -124,15 +125,132 @@
     --input: 20 40% 40%;
     --ring: 20 80% 48%;
   }
+
+  html.gartic {
+    --background: 217 100% 50%;
+    --foreground: 0 0% 100%;
+
+    --card: 217 80% 25%;
+    --card-foreground: 0 0% 100%;
+
+    --card-highlight: 217 80% 30%;
+    --card-highlight-foreground: 0 0% 100%;
+
+    --popover: 217 80% 25%;
+    --popover-foreground: 0 0% 100%;
+
+    --primary: 45 100% 50%;
+    --primary-foreground: 0 0% 0%;
+
+    --secondary: 45 100% 96%;
+    --secondary-foreground: 217 80% 25%;
+
+    --muted: 217 40% 35%;
+    --muted-foreground: 0 0% 90%;
+
+    --accent: 45 100% 50%;
+    --accent-foreground: 0 0% 0%;
+
+    --destructive: 0 100% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 217 60% 35%;
+    --input: 217 60% 35%;
+    --ring: 45 100% 50%;
+  }
 }
 
 @layer base {
   * {
     @apply border-border;
   }
+
+  /* Add border radius to all elements without explicit borders */
+  button,
+  input,
+  select,
+  .keyboard-button,
+  .letter-box,
+  .gartic-card,
+  .gartic-card-highlight,
+  .player-card-small {
+    @apply rounded-md;
+  }
+
   body {
     @apply bg-background text-foreground;
+    overflow: auto !important; /* Override the previous overflow: hidden */
   }
+
+  .full-height-container {
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .content-container {
+    flex: 1;
+    padding: 1rem;
+  }
+
+  /* Allow scrolling in mobile game content */
+  .mobile-content {
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+    height: calc(100vh - 150px); /* Adjust based on header and footer height */
+    padding-bottom: 120px; /* Extra padding at bottom for better scrolling */
+  }
+
+  /* Allow scrolling in the game setup tabs on mobile */
+  .mobile-tabs-content {
+    max-height: 90vh;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Aplicar estilos específicos para cada tema */
+  html.dark body {
+    @apply bg-background text-foreground;
+  }
+
+  html.neon body {
+    @apply bg-background text-foreground;
+    background-image: radial-gradient(
+      circle at center,
+      hsl(var(--background)),
+      hsl(240, 100%, 5%)
+    );
+  }
+
+  html.retro body {
+    @apply bg-background text-foreground;
+    background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23b88d35' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+  }
+
+  html.gartic body {
+    @apply bg-background text-foreground;
+    background-image: linear-gradient(
+      to bottom right,
+      hsl(217, 100%, 50%),
+      hsl(217, 100%, 40%)
+    );
+  }
+
+  /* Fix for neon theme input text */
+  html.neon .gartic-input,
+  html.neon .gartic-select {
+    color: black;
+  }
+}
+
+/* Update placeholder text color to be darker */
+::placeholder {
+  color: rgba(0, 0, 0, 0.6) !important;
+}
+
+.dark ::placeholder {
+  color: rgba(255, 255, 255, 0.6) !important;
 }
 
 /* Animação para a coroa */
@@ -157,21 +275,38 @@
   animation: float 2s ease-in-out infinite;
 }
 
+.crown-small {
+  position: absolute;
+  top: -8px;
+  right: 0%;
+  left: 50%;
+  font-size: 16px;
+  animation: float 2s ease-in-out infinite;
+}
+
 /* Estilos para os blocos de letras */
 .letter-box {
-  width: 40px;
-  height: 40px;
+  width: 36px; /* Increased from 30px */
+  height: 36px; /* Increased from 30px */
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   background-color: rgba(0, 0, 0, 0.2);
-  border-radius: 4px;
-  margin: 0 4px;
-  font-size: 1.25rem;
+  border-radius: 8px !important; /* Force border radius */
+  margin: 0 2px;
+  font-size: 1.1rem; /* Slightly increased font size */
   font-weight: bold;
   position: relative;
-  color: white;
+}
+
+@media (min-width: 768px) {
+  .letter-box {
+    width: 44px; /* Increased from 40px */
+    height: 44px; /* Increased from 40px */
+    font-size: 1.3rem; /* Slightly increased font size */
+    margin: 0 4px;
+  }
 }
 
 .letter-box::after {
@@ -181,8 +316,8 @@
   left: 15%;
   width: 70%;
   height: 3px;
-  background-color: #6366f1;
-  border-radius: 1px;
+  background-color: hsl(var(--primary));
+  border-radius: 2px; /* Increased from 1px */
 }
 
 /* Add these animations for letter reveal */
@@ -206,7 +341,14 @@
 
 /* Update keyboard button colors */
 .keyboard-button {
-  @apply w-10 h-10 rounded-md flex items-center justify-center font-bold text-white bg-primary hover:bg-primary/80 transition-colors;
+  @apply w-8 h-8 rounded-md flex items-center justify-center font-bold text-white bg-primary hover:bg-primary/80 transition-colors;
+  border-radius: 0.375rem !important; /* Force border radius */
+}
+
+@media (min-width: 768px) {
+  .keyboard-button {
+    @apply w-10 h-10;
+  }
 }
 
 .keyboard-button.used {
@@ -230,7 +372,8 @@
 }
 
 .player-score {
-  @apply px-3 py-1 rounded-md bg-pink-100 text-pink-600 font-bold text-lg;
+  @apply px-3 py-1 rounded-md bg-secondary text-secondary-foreground font-bold text-lg;
+  border-radius: 10px;
 }
 
 .timer-bar {
@@ -245,11 +388,11 @@
   @apply text-lg font-semibold text-primary mb-2 flex items-center gap-2;
 }
 
-/* Gartic Phone style */
+/* DevWord style - Diferente do Gartic Phone */
 .gartic-container {
-  background-color: #1e1e2e;
   min-height: 100vh;
   padding: 1rem;
+  overflow-x: hidden;
 }
 @media (min-width: 640px) {
   .gartic-container {
@@ -258,27 +401,26 @@
 }
 
 .gartic-card {
-  background-color: #5a189a;
+  background-color: hsl(var(--card));
   border-radius: 0.75rem;
-  border: 2px solid #9d4edd;
+  border: 2px solid hsl(var(--border));
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
     0 4px 6px -2px rgba(0, 0, 0, 0.05);
   overflow: hidden;
 }
 
-/* Players card. */
 .gartic-card-highlight {
-  background-color: #7b2cbf;
+  background-color: hsl(var(--card-highlight));
   border-radius: 0.75rem;
-  border: 2px solid #c77dff;
+  border: 2px solid hsl(var(--border));
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
     0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
-/* Players card. */
+
 .gartic-title {
   font-size: 1.5rem;
   font-weight: 700;
-  color: white;
+  color: hsl(var(--foreground));
   margin-bottom: 1rem;
   text-align: center;
 }
@@ -286,73 +428,84 @@
 .gartic-subtitle {
   font-size: 1.25rem;
   font-weight: 700;
-  color: #c77dff;
+  color: hsl(var(--secondary));
   margin-bottom: 0.5rem;
 }
 
 .gartic-button {
-  background-color: #3a0ca3;
-  color: white;
+  background-color: hsl(var(--muted));
+  color: hsl(var(--foreground));
   font-weight: 700;
   padding: 0.75rem 1.5rem;
   border-radius: 9999px;
-  border: 2px solid #7209b7;
+  border: 2px solid hsl(var(--border));
   transition-property: all;
   transition-duration: 200ms;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 .gartic-button:hover {
-  background-color: #4361ee;
+  background-color: hsl(var(--accent));
 }
 
 .gartic-button-primary {
-  background-color: #4cc9f0;
-  color: #3a0ca3;
+  background-color: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
   font-weight: 700;
   padding: 0.75rem 1.5rem;
   border-radius: 9999px;
-  border: 2px solid #4361ee;
+  border: 2px solid hsl(var(--border));
+  transition-property: all;
+  transition-duration: 200ms;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+.gartic-button-primary-secondary {
+  background-color: #ffffff;
+  color: hsl(var(--primary-foreground));
+  font-weight: 700;
+  padding: 0.75rem 1.5rem;
+  border-radius: 9999px;
+  border: 2px solid hsl(var(--border));
   transition-property: all;
   transition-duration: 200ms;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 .gartic-button-primary:hover {
-  background-color: #4895ef;
+  filter: brightness(1.1);
 }
 
 .gartic-input {
-  background-color: #7b2cbf;
-  border: 2px solid #9d4edd;
+  background-color: hsl(var(--secondary));
+  border: 2px solid hsl(var(--border));
   border-radius: 0.5rem;
-  color: white;
+  color: hsl(var(--secondary-foreground));
   padding: 0.5rem 1rem;
 }
 .gartic-input:focus {
-  border-color: #c77dff;
+  border-color: hsl(var(--primary));
   outline: none;
-  box-shadow: 0 0 0 2px #c77dff;
+  box-shadow: 0 0 0 2px hsl(var(--primary));
 }
 
 .gartic-select {
-  background-color: #7b2cbf;
-  border: 2px solid #9d4edd;
+  background-color: hsl(var(--secondary));
+  border: 2px solid hsl(var(--border));
   border-radius: 0.5rem;
-  color: white;
+  color: hsl(var(--secondary-foreground));
   padding: 0.5rem 1rem;
 }
 .gartic-select:focus {
-  border-color: #c77dff;
+  border-color: hsl(var(--primary));
   outline: none;
-  box-shadow: 0 0 0 2px #c77dff;
+  box-shadow: 0 0 0 2px hsl(var(--primary));
 }
 
-/* Regras. */
 .gartic-rules {
-  background-color: #5a189a;
+  background-color: hsl(var(--card));
   border-radius: 0.75rem;
-  border: 2px solid #9d4edd;
+  border: 2px solid hsl(var(--border));
   padding: 1rem;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
     0 4px 6px -2px rgba(0, 0, 0, 0.05);
@@ -361,7 +514,7 @@
 .gartic-rules-title {
   font-size: 1.25rem;
   font-weight: 700;
-  color: #4cc9f0;
+  color: hsl(var(--primary));
   margin-bottom: 1rem;
   text-align: center;
 }
@@ -374,8 +527,8 @@
 }
 
 .gartic-rules-number {
-  background-color: #7b2cbf;
-  color: white;
+  background-color: hsl(var(--card-highlight));
+  color: hsl(var(--foreground));
   font-weight: 700;
   border-radius: 9999px;
   width: 1.5rem;
@@ -387,39 +540,50 @@
 }
 
 .gartic-rules-text {
-  color: white;
+  color: hsl(var(--foreground));
   font-size: 0.875rem;
 }
 
-/* Responsividade */
-@media (max-width: 640px) {
-  .letter-box {
-    width: 30px;
-    height: 30px;
-    font-size: 1rem;
-    margin: 0 2px;
-  }
-
-  .keyboard-button {
-    @apply w-8 h-8 text-sm;
-  }
-}
-
-/* Animação de roleta para avatares */
+/* Melhorar a animação de roleta para avatares */
 @keyframes spin {
   0% {
-    transform: scale(1) rotate(0deg);
-  }
-  50% {
-    transform: scale(1.2) rotate(180deg);
+    transform: translateY(0%);
   }
   100% {
-    transform: scale(1) rotate(360deg);
+    transform: translateY(-100%);
   }
 }
 
-.avatar-spin {
-  animation: spin 0.5s ease-in-out;
+.avatar-spin-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.avatar-spin-track {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  animation: none;
+}
+
+.avatar-spin-track.spinning {
+  animation: spin 100ms linear infinite;
+}
+
+.avatar-spin-track.slowing {
+  animation-duration: 500ms;
+  animation-iteration-count: 3;
+  animation-timing-function: ease-out;
+}
+
+.avatar-spin-item {
+  width: 100%;
+  height: 100%;
+  flex-shrink: 0;
 }
 
 .avatar-highlight {
@@ -428,275 +592,252 @@
   z-index: 10;
 }
 
-/* Temas completos */
-html.gartic {
-  background-color: #7b2cbf;
-  color: white;
+/* Estilos para o tema retrô */
+.retro .keyboard-button {
+  @apply bg-primary text-black hover:bg-primary/80;
 }
 
-html.dark {
-  background-color: #121212;
-  color: white;
+.retro .gartic-input,
+.retro .gartic-select {
+  @apply text-black;
 }
 
-html.dark .gartic-container {
-  background-color: #121212;
+.retro .letter-box {
+  @apply text-black;
 }
 
-html.dark .gartic-card {
-  background-color: #1e1e1e;
-  border-color: #333;
-}
-
-html.dark .gartic-card-highlight {
-  background-color: #2d2d2d;
-  border-color: #444;
-}
-
-html.dark .gartic-button {
-  background-color: #333;
-  border-color: #444;
-}
-
-html.dark .gartic-button-primary {
-  background-color: #0070f3;
-  color: white;
-  border-color: #0060df;
-}
-
-html.dark .gartic-rules {
-  background-color: #1e1e1e;
-  border-color: #333;
-}
-
-html.neon {
-  background-color: #000;
-  color: #fff;
-}
-
-html.neon .gartic-container {
-  background-color: #000;
-}
-
-html.neon .gartic-card {
-  background-color: #111;
-  border-color: #0ff;
-  box-shadow: 0 0 10px #0ff, 0 0 20px rgba(0, 255, 255, 0.3);
-}
-
-html.neon .gartic-card-highlight {
-  background-color: #111;
-  border-color: #f0f;
-  box-shadow: 0 0 10px #f0f, 0 0 20px rgba(255, 0, 255, 0.3);
-}
-
-html.neon .gartic-button {
-  background-color: #111;
-  border-color: #0ff;
-  color: #0ff;
-  box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
-}
-
-html.neon .gartic-button-primary {
-  background-color: #111;
-  border-color: #f0f;
-  color: #f0f;
-  box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
-}
-
-html.neon .gartic-rules {
-  background-color: #111;
-  border-color: #0f0;
-  box-shadow: 0 0 10px #0f0, 0 0 20px rgba(0, 255, 0, 0.3);
-}
-
-/* Update the retro theme to ensure text is black except in inputs/selectable elements */
-
-/* Retro theme specific styles */
-html.retro .gartic-container {
-  background-color: #f5e6c8;
-}
-
-html.retro .gartic-card {
-  background-color: #f8f0dd;
-  border-color: #8b4513;
-}
-
-html.retro .gartic-card-highlight {
-  background-color: #f8f0dd;
-  border-color: #a0522d;
-}
-
-html.retro .gartic-button {
-  background-color: #8b4513;
-  border-color: #5c4033;
-  color: #f5e6c8;
-}
-
-html.retro .gartic-button-primary {
-  background-color: #a0522d;
-  border-color: #8b4513;
-  color: #f5e6c8;
-}
-
-html.retro .gartic-rules {
-  background-color: #f8f0dd;
-  border-color: #8b4513;
-}
-
-/* Fix text colors in retro theme */
-html.retro .text-white,
-html.retro p:not(.gartic-input *, .gartic-select *),
-html.retro h1:not(.gartic-input *, .gartic-select *),
-html.retro h2:not(.gartic-input *, .gartic-select *),
-html.retro h3:not(.gartic-input *, .gartic-select *),
-html.retro div:not(.gartic-input *, .gartic-select *) {
-  color: #5c4033;
-}
-
-html.retro .gartic-rules-text,
-html.retro .gartic-subtitle,
-html.retro .gartic-title {
-  color: #5c4033;
-}
-
-/* Keep text white in buttons and interactive elements */
-html.retro .gartic-button,
-html.retro .gartic-button-primary,
-html.retro button:not([class*="text-"]) {
-  color: #f5e6c8;
-}
-
-html.retro .gartic-input,
-html.retro .gartic-select {
-  color: #5c4033;
-  background-color: #f8f0dd;
-}
-
-/* Countdown timer */
+/* Estilos para o contador regressivo */
 .countdown-overlay {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.8);
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 9999;
-  pointer-events: none; /* Allow clicks to pass through */
+  z-index: 50;
 }
 
 .countdown-number {
-  position: relative;
-  width: 200px;
-  height: 200px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 120px;
+  font-size: 8rem;
   font-weight: bold;
   color: white;
+  animation: pulse 1s infinite;
 }
 
-.countdown-diamond {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-color: #7b2cbf;
-  transform: rotate(45deg);
-  border-radius: 24px;
-  z-index: -1;
-}
-
-.countdown-lights {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-}
-
-.countdown-light {
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  background-color: #ffcc00;
-  border-radius: 50%;
-  box-shadow: 0 0 10px #ffcc00, 0 0 20px rgba(255, 204, 0, 0.5);
-}
-
-/* Avatar selector animation */
-@keyframes avatarRoll {
+@keyframes pulse {
   0% {
-    transform: translateY(-100%);
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.8;
   }
   100% {
-    transform: translateY(0);
+    transform: scale(1);
+    opacity: 1;
   }
 }
 
-.avatar-roll-container {
-  position: relative;
-  width: 100px;
-  height: 100px;
+/* Estilos para o layout de jogadores no topo */
+.players-row {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  justify-content: center;
+}
+
+.players-row::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+.player-card-small {
+  flex: 0 0 auto;
+  width: 60px;
+  text-align: center;
+  padding: 1px 1px;
+  border-radius: 10px !important;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Theme-specific styling for player cards */
+html.dark .player-card-small {
+  background-color: hsl(222.2 84% 8%);
+}
+
+html.neon .player-card-small {
+  background-color: hsl(240 100% 12%);
+  border-color: hsl(180 100% 50%, 0.3) !important;
+  box-shadow: 0 0 8px rgba(0, 255, 255, 0.2);
+}
+
+html.retro .player-card-small {
+  background-color: hsl(39 50% 90%);
+  border-color: hsl(20 80% 48%) !important;
+}
+
+html.gartic .player-card-small {
+  background-color: hsl(217 80% 30%);
+}
+
+/* Estilos para feedback de acerto */
+@keyframes correctFeedback {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.correct-feedback {
+  animation: correctFeedback 0.5s ease-in-out;
+}
+
+/* Estilos para feedback de erro */
+@keyframes errorFeedback {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20%,
+  60% {
+    transform: translateX(-5px);
+  }
+  40%,
+  80% {
+    transform: translateX(5px);
+  }
+}
+
+.error-feedback {
+  animation: errorFeedback 0.5s ease-in-out;
+}
+
+/* Ajustes para tela cheia sem scroll */
+.full-height-container {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
-  margin: 0 auto;
-  border-radius: 12px;
-  border: 3px solid #ffcc00;
-  box-shadow: 0 0 15px rgba(255, 204, 0, 0.7);
 }
 
-.avatar-roll-item {
-  position: absolute;
+.content-container {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+/* Layout mobile otimizado */
+.mobile-game-layout {
   width: 100%;
-  height: 100%;
-  animation: avatarRoll 0.2s ease-in-out;
 }
 
-/* Mobile responsiveness */
-@media (max-width: 1023px) {
-  .grid-cols-1 {
-    grid-template-columns: 1fr;
+/* Header fixo para mobile */
+.mobile-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: hsl(var(--background));
+  z-index: 40;
+  padding: 0.5rem;
+  border-bottom: 1px solid hsl(var(--border));
+}
+
+/* Conteúdo principal com scroll para mobile */
+.mobile-content {
+  margin-top: 110px; /* Altura do header */
+  /* Altura do footer */
+  padding: 0.5rem;
+  overflow-y: auto;
+}
+
+/* Footer fixo para mobile */
+.mobile-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: hsl(var(--card));
+  z-index: 40;
+  padding: 0.5rem;
+  border-top: 1px solid hsl(var(--border));
+}
+
+/* Ajustar o layout mobile - logo menor e players centralizados */
+@media (max-width: 640px) {
+  .gartic-container .logo-container img {
+    max-width: 150px !important;
+    height: auto !important;
   }
 
-  .game-layout {
-    display: flex;
-    flex-direction: column;
+  .players-row {
+    justify-content: center;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
   }
 
-  .game-column {
-    width: 100%;
-    margin-bottom: 1rem;
-  }
-
-  .letter-box {
-    width: 28px;
-    height: 28px;
-    font-size: 0.875rem;
-  }
-
-  .keyboard-button {
-    width: 32px;
-    height: 32px;
-    font-size: 0.75rem;
+  /* Ocultar logo em mobile */
+  .mobile-game-layout .logo-container {
+    display: none;
   }
 }
 
-/* Wider center column */
-.game-layout {
-  display: grid;
-  grid-template-columns: 1fr 1.5fr 1fr;
-  gap: 1rem;
-}
+/* Adicionar estilos para os modais em versão mobile */
+@media (max-width: 640px) {
+  .mobile-success-modal {
+    max-width: 90vw !important;
+    padding: 1rem !important;
+  }
 
-@media (max-width: 1023px) {
-  .game-layout {
-    grid-template-columns: 1fr;
+  .mobile-success-modal img {
+    width: 100px !important;
+    height: 100px !important;
+  }
+
+  .mobile-success-modal .text-3xl {
+    font-size: 1.5rem !important;
+  }
+
+  .mobile-success-modal .text-2xl {
+    font-size: 1.25rem !important;
+  }
+
+  .mobile-gameover-modal {
+    max-width: 90vw !important;
+    padding: 1rem !important;
+  }
+
+  .mobile-gameover-modal .text-3xl {
+    font-size: 1.5rem !important;
+  }
+
+  .mobile-gameover-modal .text-2xl {
+    font-size: 1.25rem !important;
+  }
+
+  .mobile-gameover-modal .text-xl {
+    font-size: 1.125rem !important;
   }
 }
 
-/* Fix para o erro cz-shortcut-listen */
-body[cz-shortcut-listen="true"] {
-  background-color: inherit;
+.keyboard-container {
+  background-color: hsl(var(--card));
+  border-radius: 1rem;
+  padding: 1rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }

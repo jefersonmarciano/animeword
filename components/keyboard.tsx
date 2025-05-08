@@ -38,45 +38,45 @@ export default function Keyboard({
 
   // Update the getKeyClass function to use green for correct letters
   const getKeyClass = (key: string) => {
-    if (correctLetters && correctLetters.includes(key))
-      return "bg-green-500 text-white";
-    if (wrongLetters && wrongLetters.includes(key))
-      return "bg-red-500 text-white opacity-50";
-    if (guessedLetters && guessedLetters.includes(key))
-      return "bg-purple-700 text-white opacity-50";
-    return "bg-blue-500 text-white hover:bg-blue-600";
+    if (correctLetters.includes(key)) return "keyboard-button correct";
+    if (wrongLetters.includes(key)) return "keyboard-button wrong";
+    if (guessedLetters.includes(key)) return "keyboard-button used";
+    return "keyboard-button";
   };
 
   const isKeyUsed = (key: string) => {
     return (
-      (guessedLetters && guessedLetters.includes(key)) ||
-      (wrongLetters && wrongLetters.includes(key)) ||
-      (correctLetters && correctLetters.includes(key))
+      guessedLetters.includes(key) ||
+      wrongLetters.includes(key) ||
+      correctLetters.includes(key)
     );
   };
 
   return (
-    <div className="keyboard-container">
+    <div className="keyboard-container rounded-xl">
       <Tabs
         defaultValue="letras"
         value={activeTab}
         onValueChange={setActiveTab}
       >
-        <TabsList className="grid grid-cols-3 mb-4">
+        <TabsList className="grid grid-cols-3 mb-2 ">
           <TabsTrigger value="letras">Letras</TabsTrigger>
           <TabsTrigger value="numeros">Números</TabsTrigger>
-          <TabsTrigger value="especiais">Caracteres Especiais</TabsTrigger>
+          <TabsTrigger value="especiais" className="md:block hidden">
+            Caracteres Especiais
+          </TabsTrigger>
+          <TabsTrigger value="especiais" className="md:hidden block">
+            Caracteres
+          </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="letras" className="space-y-2">
+        <TabsContent value="letras" className="space-y-1">
           {letters.map((row, rowIndex) => (
             <div key={`row-${rowIndex}`} className="flex justify-center gap-1">
               {row.map((letter) => (
                 <button
                   key={letter}
-                  className={`w-8 h-8 rounded-md font-semibold text-center flex items-center justify-center ${getKeyClass(
-                    letter
-                  )}`}
+                  className={getKeyClass(letter)}
                   onClick={() => onKeyPress(letter)}
                   disabled={isKeyUsed(letter)}
                 >
@@ -87,15 +87,13 @@ export default function Keyboard({
           ))}
         </TabsContent>
 
-        <TabsContent value="numeros" className="space-y-2">
+        <TabsContent value="numeros" className="space-y-1">
           {numbers.map((row, rowIndex) => (
             <div key={`row-${rowIndex}`} className="flex justify-center gap-1">
               {row.map((num) => (
                 <button
                   key={num}
-                  className={`w-8 h-8 rounded-md font-semibold text-center flex items-center justify-center ${getKeyClass(
-                    num
-                  )}`}
+                  className={getKeyClass(num)}
                   onClick={() => onKeyPress(num)}
                   disabled={isKeyUsed(num)}
                 >
@@ -106,15 +104,13 @@ export default function Keyboard({
           ))}
         </TabsContent>
 
-        <TabsContent value="especiais" className="space-y-2">
+        <TabsContent value="especiais" className="space-y-1">
           {specialChars.map((row, rowIndex) => (
             <div key={`row-${rowIndex}`} className="flex justify-center gap-1">
               {row.map((char) => (
                 <button
                   key={char}
-                  className={`w-8 h-8 rounded-md font-semibold text-center flex items-center justify-center ${getKeyClass(
-                    char
-                  )}`}
+                  className={getKeyClass(char)}
                   onClick={() => onKeyPress(char)}
                   disabled={isKeyUsed(char)}
                 >
