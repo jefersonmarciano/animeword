@@ -8,6 +8,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { useState, useEffect } from "react";
 
 interface SuccessModalProps {
   isOpen: boolean;
@@ -22,10 +23,24 @@ export default function SuccessModal({
   word,
   hint,
 }: SuccessModalProps) {
+  const [displayWord, setDisplayWord] = useState(word);
+  const [displayHint, setDisplayHint] = useState(hint);
+
+  useEffect(() => {
+    if (isOpen) {
+      setDisplayWord(word);
+      setDisplayHint(hint);
+    }
+  }, [isOpen, word, hint]);
+
+  const handleClose = () => {
+    onClose();
+  };
+
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
+    <Dialog open={isOpen} onOpenChange={handleClose}>
       <DialogContent
-        className="sm:max-w-md mobile-success-modal rounded-2xl overflow-hidden border-0 shadow-lg"
+        className="sm:max-w-md mobile-success-modal rounded-2xl overflow-hidden border-0 shadow-lg transition-all duration-300"
         style={{ borderRadius: "1rem" }}
       >
         <DialogHeader className="px-6 pt-6">
@@ -44,13 +59,13 @@ export default function SuccessModal({
 
           <div className="bg-green-50 p-4 rounded-xl w-full text-center">
             <p className="text-lg mb-2 text-gray-800">A palavra era:</p>
-            <p className="text-3xl font-bold text-green-600">{word}</p>
-            <p className="text-sm text-gray-700 mt-2">{hint}</p>
+            <p className="text-3xl font-bold text-green-600">{displayWord}</p>
+            <p className="text-sm text-gray-700 mt-2">{displayHint}</p>
           </div>
 
           <Button
-            onClick={onClose}
-            className="bg-green-500 hover:bg-green-600 text-white px-6 py-2 text-lg rounded-xl"
+            onClick={handleClose}
+            className="bg-green-500 hover:bg-green-600 text-white px-6 py-2 text-lg rounded-xl transition-colors duration-200"
           >
             Continuar
           </Button>
