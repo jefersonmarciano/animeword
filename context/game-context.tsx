@@ -45,7 +45,7 @@ const getGameQuestions = (): GameQuestion[] => {
       difficulty: "Médio",
     },
     {
-      word: "Darwin's Game",
+      word: "Darwins Game",
       hint: "Casais em jogo de sobrevivência",
       difficulty: "Fácil",
     },
@@ -70,7 +70,7 @@ const getGameQuestions = (): GameQuestion[] => {
       difficulty: "Médio",
     },
     {
-      word: "Re:Creators",
+      word: "ReCreators",
       hint: "Personagens de histórias ganham vida",
       difficulty: "Difícil",
     },
@@ -80,7 +80,7 @@ const getGameQuestions = (): GameQuestion[] => {
       difficulty: "Fácil",
     },
     {
-      word: "Hataraku Maou-sama!",
+      word: "Hataraku Maou sama",
       hint: "Rei demônio em Tóquio",
       difficulty: "Médio",
     },
@@ -90,7 +90,7 @@ const getGameQuestions = (): GameQuestion[] => {
       difficulty: "Difícil",
     },
     {
-      word: "Aldnoah.Zero",
+      word: "Aldnoah Zero",
       hint: "Conspiração militar e alienígenas",
       difficulty: "Médio",
     },
@@ -100,7 +100,7 @@ const getGameQuestions = (): GameQuestion[] => {
       difficulty: "Fácil",
     },
     {
-      word: "Re:Zero kara Hajimeru Isekai Seikatsu",
+      word: "ReZero kara Hajimeru Isekai Seikatsu",
       hint: "Garoto preso em loop temporal com poderes",
       difficulty: "Difícil",
     },
@@ -140,7 +140,7 @@ const getGameQuestions = (): GameQuestion[] => {
       difficulty: "Médio",
     },
     {
-      word: "Saiki Kusuo no Psi-nan",
+      word: "Saiki Kusuo no Psi nan",
       hint: "Menina com poderes psíquicos é controlada pelo governo",
       difficulty: "Fácil",
     },
@@ -155,7 +155,7 @@ const getGameQuestions = (): GameQuestion[] => {
       difficulty: "Médio",
     },
     {
-      word: "Kono Subarashii Sekai ni Shukufuku wo!",
+      word: "Kono Subarashii Sekai ni Shukufuku wo",
       hint: "Garoto invocado em outro mundo com uma deusa",
       difficulty: "Fácil",
     },
@@ -165,7 +165,7 @@ const getGameQuestions = (): GameQuestion[] => {
       difficulty: "Médio",
     },
     {
-      word: "Steins;Gate",
+      word: "Steins Gate",
       hint: "Cientista louco e viagem no tempo",
       difficulty: "Difícil",
     },
@@ -215,7 +215,7 @@ const getGameQuestions = (): GameQuestion[] => {
       difficulty: "Fácil",
     },
     {
-      word: "Fullmetal Alchemist: Brotherhood",
+      word: "Fullmetal Alchemist Brotherhood",
       hint: "Dois irmãos tentam recuperar seus corpos",
       difficulty: "Médio",
     },
@@ -235,7 +235,7 @@ const getGameQuestions = (): GameQuestion[] => {
       difficulty: "Fácil",
     },
     {
-      word: "Fate/Zero",
+      word: "Fate Zero",
       hint: "Lutadores competem por um desejo",
       difficulty: "Difícil",
     },
@@ -305,7 +305,7 @@ const getGameQuestions = (): GameQuestion[] => {
       difficulty: "Médio",
     },
     {
-      word: "Kobayashi-san Chi no Maid Dragon",
+      word: "Kobayashi san Chi no Maid Dragon",
       hint: "Jovem e garota dragão convivem juntos",
       difficulty: "Fácil",
     },
@@ -390,7 +390,7 @@ const getGameQuestions = (): GameQuestion[] => {
       difficulty: "Fácil",
     },
     {
-      word: "Grimgar: Ashes and Illusions",
+      word: "Grimgar Ashes and Illusions",
       hint: "Jovem acorda sem memória em mundo de fantasia",
       difficulty: "Médio",
     },
@@ -450,7 +450,7 @@ const getGameQuestions = (): GameQuestion[] => {
       difficulty: "Fácil",
     },
     {
-      word: "Angel Beats!",
+      word: "Angel Beats",
       hint: "Garoto em coma vive em mundo alternativo",
       difficulty: "Médio",
     },
@@ -500,12 +500,12 @@ const getGameQuestions = (): GameQuestion[] => {
       difficulty: "Difícil",
     },
     {
-      word: "Aokana: Four Rhythm Across the Blue",
+      word: "Aokana Four Rhythm Across the Blue",
       hint: "Escola só para garotas com superpoderes",
       difficulty: "Médio",
     },
     {
-      word: "To LOVE-Ru",
+      word: "To LOVE Ru",
       hint: "Estudante se envolve com alienígenas misteriosos",
       difficulty: "Fácil",
     },
@@ -520,12 +520,12 @@ const getGameQuestions = (): GameQuestion[] => {
       difficulty: "Difícil",
     },
     {
-      word: "Rage of Bahamut: Genesis",
+      word: "Rage of Bahamut Genesis",
       hint: "Jovem sobrevive em mundo medieval com dragões",
       difficulty: "Médio",
     },
     {
-      word: "Hamefura (Otome Game no Hametsu Flag)",
+      word: "Hamefura Otome Game no Hametsu Flag",
       hint: "Donzela reencarna como vilã de otome game",
       difficulty: "Fácil",
     },
@@ -585,12 +585,12 @@ const getGameQuestions = (): GameQuestion[] => {
       difficulty: "Médio",
     },
     {
-      word: "Parasyte -the maxim-",
+      word: "Parasyte the maxim",
       hint: "Jovens enfrentam parasitas espaciais",
       difficulty: "Fácil",
     },
     {
-      word: "Jibaku Shounen Hanako-kun",
+      word: "Jibaku Shounen Hanako kun",
       hint: "Garota começa a ver demônios após acidente",
       difficulty: "Médio",
     },
@@ -630,12 +630,12 @@ const getGameQuestions = (): GameQuestion[] => {
       difficulty: "Fácil",
     },
     {
-      word: "C: Control",
+      word: "C Control",
       hint: "Jovem tenta impedir o fim do mundo com aplicativo",
       difficulty: "Médio",
     },
     {
-      word: "Terra e...",
+      word: "Terra e",
       hint: "Jovem acorda em outro planeta e luta para sobreviver",
       difficulty: "Difícil",
     },
@@ -650,7 +650,7 @@ const getGameQuestions = (): GameQuestion[] => {
       difficulty: "Fácil",
     },
     {
-      word: "Yu☆Gi☆Oh!",
+      word: "Yu Gi Oh",
       hint: "Jovem quer ser o rei dos duelistas",
       difficulty: "Médio",
     },
@@ -705,7 +705,7 @@ const getGameQuestions = (): GameQuestion[] => {
       difficulty: "Médio",
     },
     {
-      word: "Eizouken ni wa Te wo Dasu na!",
+      word: "Eizouken ni wa Te wo Dasu na",
       hint: "Jovens correm atrás de sonhos em estúdio de animação",
       difficulty: "Fácil",
     },
@@ -730,12 +730,12 @@ const getGameQuestions = (): GameQuestion[] => {
       difficulty: "Fácil",
     },
     {
-      word: "Tsukuyomi: Moon Phase",
+      word: "Tsukuyomi Moon Phase",
       hint: "Jovem se apaixona por uma vampira",
       difficulty: "Médio",
     },
     {
-      word: "Phantom: Requiem for the Phantom",
+      word: "Phantom Requiem for the Phantom",
       hint: "Dupla de assassinos com memória perdida",
       difficulty: "Difícil",
     },
@@ -765,7 +765,7 @@ const getGameQuestions = (): GameQuestion[] => {
       difficulty: "Médio",
     },
     {
-      word: "Re:Creators",
+      word: "ReCreators",
       hint: "Garoto revive dentro de videogame antigo",
       difficulty: "Fácil",
     },
@@ -790,7 +790,7 @@ const getGameQuestions = (): GameQuestion[] => {
       difficulty: "Fácil",
     },
     {
-      word: "Ga-Rei: Zero",
+      word: "Ga Rei Zero",
       hint: "Jovem é escolhido por relíquia maldita",
       difficulty: "Médio",
     },
@@ -1400,10 +1400,10 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     // Adicionar a palavra à lista de perguntas usadas
     setUsedQuestions((prev) => [...prev, question.word]);
 
-    // Limpar a palavra para remover possíveis caracteres de nova linha
+    // Limpar a palavra para remover possíveis caracteres de nova linha e converter para maiúsculo
     return {
       ...question,
-      word: question.word.trim(),
+      word: question.word.trim().toUpperCase(),
     };
   };
 
@@ -1459,26 +1459,34 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     if (!currentQuestion) return false;
 
     return currentQuestion.word
+      .toUpperCase()
       .split("")
-      .every(
-        (letter) =>
-          letter === " " || guessedLetters.includes(letter.toUpperCase())
-      );
+      .every((letter) => letter === " " || guessedLetters.includes(letter));
   };
 
   // Modificar a função makeGuess para incluir diretamente a lógica de erros máximos
   const makeGuess = (letter: string) => {
-    if (guessedLetters.includes(letter) || wrongLetters.includes(letter)) {
+    // Converter a letra para maiúsculo
+    const upperCaseLetter = letter.toUpperCase();
+
+    if (
+      guessedLetters.includes(upperCaseLetter) ||
+      wrongLetters.includes(upperCaseLetter)
+    ) {
       return;
     }
 
-    if (currentQuestion && currentQuestion.word.includes(letter)) {
-      setGuessedLetters([...guessedLetters, letter]);
+    if (
+      currentQuestion &&
+      currentQuestion.word.toUpperCase().includes(upperCaseLetter)
+    ) {
+      setGuessedLetters([...guessedLetters, upperCaseLetter]);
 
       // Adicionar pontos ao jogador atual
       const occurrences = currentQuestion.word
+        .toUpperCase()
         .split("")
-        .filter((l) => l === letter).length;
+        .filter((l) => l === upperCaseLetter).length;
       const updatedPlayers = [...players];
       updatedPlayers[currentPlayerIndex].score += occurrences;
 
@@ -1495,8 +1503,12 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       // Modificado para ignorar espaços na verificação de vitória
       if (
         currentQuestion.word
+          .toUpperCase()
           .split("")
-          .every((l) => l === " " || guessedLetters.includes(l) || l === letter)
+          .every(
+            (l) =>
+              l === " " || guessedLetters.includes(l) || l === upperCaseLetter
+          )
       ) {
         // Adicionar pontos bônus por completar a palavra
         updatedPlayers[currentPlayerIndex].score += 10;
@@ -1517,7 +1529,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       // Se o modo for "Contínuo", o jogador continua
       // Se for "Padrão" ou "Fixo", depende da lógica abaixo
     } else {
-      setWrongLetters([...wrongLetters, letter]);
+      setWrongLetters([...wrongLetters, upperCaseLetter]);
 
       // Subtrair pontos por erro - ALTERADO PARA -1 PONTO
       const updatedPlayers = [...players];
@@ -1547,7 +1559,13 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
 
   // Modificar a função guessWord para incluir diretamente a lógica de erros máximos
   const guessWord = (word: string) => {
-    if (currentQuestion && word.toUpperCase() === currentQuestion.word) {
+    // Converter a palavra digitada para maiúsculo
+    const upperCaseWord = word.toUpperCase();
+
+    if (
+      currentQuestion &&
+      upperCaseWord === currentQuestion.word.toUpperCase()
+    ) {
       // Acertou a palavra completa
       const updatedPlayers = [...players];
       updatedPlayers[currentPlayerIndex].score += 10; // Bônus por acertar a palavra completa
