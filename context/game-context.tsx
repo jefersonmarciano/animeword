@@ -1245,21 +1245,6 @@ export const avatars = [
   "/images/avatars/homemTranquilo.png",
 ];
 
-// Número máximo de erros permitidos
-// Remover a constante MAX_ERRORS = 5 e substituir por uma função
-export const getMaxErrors = (difficulty: Difficulty): number => {
-  switch (difficulty) {
-    case "Fácil":
-      return 8;
-    case "Médio":
-      return 6;
-    case "Difícil":
-      return 4;
-    default:
-      return 6; // Médio como padrão
-  }
-};
-
 // Interface do contexto
 interface GameContextType {
   players: Player[];
@@ -1481,7 +1466,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       );
   };
 
-  // Modificar a função makeGuess para retirar apenas 1 ponto ao errar uma letra
+  // Modificar a função makeGuess para incluir diretamente a lógica de erros máximos
   const makeGuess = (letter: string) => {
     if (guessedLetters.includes(letter) || wrongLetters.includes(letter)) {
       return;
@@ -1560,7 +1545,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  // Modificar a função guessWord para não encerrar o jogo ao errar, apenas retirar 50 pontos e passar para o próximo jogador
+  // Modificar a função guessWord para incluir diretamente a lógica de erros máximos
   const guessWord = (word: string) => {
     if (currentQuestion && word.toUpperCase() === currentQuestion.word) {
       // Acertou a palavra completa
